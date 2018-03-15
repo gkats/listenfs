@@ -21,13 +21,32 @@ router.get('/artists', (req, res, next) => {
 });
 
 router.get('/artists/:name', (req, res, next) => {
-  fs.readdir(path.join(rootPath, req.params.name), (err, files) => {
+  const artistPath = path.join(rootPath, req.params.name);
+  fs.readdir(artistPath, (err, files) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    res.json(files.filter(f => isDirectory(path.join(artistPath, f))));
+  });
+});
+
+router.get('/albums/:artistName/:albumName', (req, res, next) => {
+  const albumPath = path.join(
+    rootPath,
+    req.params.artistName,
+    req.params.albumName
+  );
+  fs.readdir(albumPath, (err, files) => {
     if (err) {
       next(err);
       return;
     }
     res.json(
-      files.filter(f => isDirectory(path.join(rootPath, req.params.name, f)))
+      files.filter(f => isMp3(path.join(albumPath, f))).map(f => ({
+        name: f.replace('.mp3', ''),
+        location: path.join(req.params.artistName, req.params.albumName, f)
+      }))
     );
   });
 });

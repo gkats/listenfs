@@ -3,11 +3,14 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'preact-redux';
 import thunk from 'redux-thunk';
 import artists from './Artists/reducer';
+import albums from './Albums/reducer';
 
 export const configureStore = (persistedState = {}) =>
   createStore(
     combineReducers({
-      artists
+      artists,
+      albums,
+      config: (state = {}, action) => state
     }),
     persistedState,
     applyMiddleware(thunk)

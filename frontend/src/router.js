@@ -1,5 +1,6 @@
 import Artists from './Artists/Artists';
 import Artist from './Artists/Artist';
+import Album from './Albums/Album';
 import NotFound from './NotFound/NotFound';
 
 const props = {};
@@ -28,6 +29,17 @@ export default function router(hash) {
       props: Object.assign({}, props, {
         route: {
           name: decodeURI(path.match(/artists\/(.+)$/)[1])
+        }
+      })
+    };
+  } else if (path.match(/albums\/(.+)\/(.+)$/)) {
+    const matches = path.match(/albums\/(.+)\/(.+)$/);
+    return {
+      Component: Album,
+      props: Object.assign({}, props, {
+        route: {
+          artistName: decodeURI(matches[1]),
+          albumName: decodeURI(matches[2])
         }
       })
     };

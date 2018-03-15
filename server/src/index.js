@@ -5,9 +5,9 @@ const spa = require('./spa');
 const rootPath = process.env.ROOT_PATH;
 
 const app = express();
-
+app.disable('x-powered-by');
 app.use(express.static(path.join(__dirname, '../../public')));
-
+app.use('/tracks', express.static(rootPath));
 app.use('/spa', spa);
 
 app.listen(3000, () => console.log('Server listening on port 3000.'));
