@@ -8,13 +8,13 @@ class Artists extends Component {
     this.props.index();
   }
 
-  render({ artists, isLoading }) {
+  render() {
     return (
       <div>
-        {isLoading ? (
+        {this.props.isLoading ? (
           <div>Loading artists...</div>
-        ) : artists.length ? (
-          artists.map(a => (
+        ) : this.props.artists.length ? (
+          this.props.artists.map(a => (
             <div>
               <Link href={`#/artists/${a}`} relative={true}>
                 {a}

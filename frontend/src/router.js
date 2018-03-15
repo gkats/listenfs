@@ -1,5 +1,5 @@
 import Artists from './Artists/Artists';
-import Artist from './Artist/Artist';
+import Artist from './Artists/Artist';
 import NotFound from './NotFound/NotFound';
 
 const props = {};
