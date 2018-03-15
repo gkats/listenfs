@@ -1,5 +1,10 @@
 import { h } from 'preact';
+import Artists from '../Artists/Artists';
 
-const App = () => <div>Hello from the frontend app</div>;
+const App = (props) => (
+  <div>
+    <Artists />
+  </div>
+);
 
 export default App;

@@ -35,10 +35,9 @@ module.exports = {
 
   devtool: 'eval',
 
-  plugins: [new webpack.HotModuleReplacementPlugin()],
-
-  devServer: {
-    contentBase: path.join(__dirname, '../public'),
-    hot: true
-  }
+  plugins: [
+    new webpack.DefinePlugin({
+      SPA_HOST: JSON.stringify(process.env.SPA_HOST || 'http://localhost:3000')
+    }),
+  ]
 };
