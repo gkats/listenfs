@@ -1,10 +1,14 @@
 import { h } from 'preact';
-import Artists from '../Artists/Artists';
+import router from '../router';
 
-const App = (props) => (
-  <div>
-    <Artists />
-  </div>
-);
+const App = ({ path }) => {
+  const { Component, props } = router(path);
+
+  return (
+    <div>
+      <Component {...props} />
+    </div>
+  );
+};
 
 export default App;
