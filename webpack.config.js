@@ -31,6 +31,7 @@ module.exports = {
   devtool: 'eval',
 
   plugins: [
+    new webpack.EnvironmentPlugin(['ROOT_PATH']),
     new webpack.HotModuleReplacementPlugin()
   ],
 

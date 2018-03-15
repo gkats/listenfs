@@ -1,5 +1,5 @@
 import { h } from 'preact';
 
-const App = () => <div>App loaded.</div>;
+const App = ({ root }) => <div>{root}</div>;
 
 export default App;
