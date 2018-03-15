@@ -6,9 +6,9 @@ module.exports = {
     rules: [
       // Javascript
       {
-         test: /\.js$/,
-         include: path.join(__dirname, 'src'),
-         loader: 'babel-loader'
+        test: /\.js$/,
+        include: path.join(__dirname, 'src'),
+        loader: 'babel-loader'
       },
       // External CSS. Needs to be loaded as stylesheet.
       {
@@ -28,15 +28,17 @@ module.exports = {
       }
     ]
   },
+
+  output: {
+    path: path.join(__dirname, '../public')
+  },
+
   devtool: 'eval',
 
-  plugins: [
-    new webpack.EnvironmentPlugin(['ROOT_PATH']),
-    new webpack.HotModuleReplacementPlugin()
-  ],
+  plugins: [new webpack.HotModuleReplacementPlugin()],
 
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    contentBase: path.join(__dirname, '../public'),
     hot: true
   }
 };
