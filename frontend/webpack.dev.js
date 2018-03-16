@@ -1,15 +1,12 @@
 const path = require('path');
-const webpack = require('webpack');
+const merge = require('webpack-merge');
+const commonConfig = require('./webpack.common.js');
 
-module.exports = {
+module.exports = merge(commonConfig, {
+  devtool: 'eval',
+
   module: {
     rules: [
-      // Javascript
-      {
-        test: /\.js$/,
-        include: path.join(__dirname, 'src'),
-        loader: 'babel-loader'
-      },
       // CSS modules stylesheets
       {
         test: /\.css$/,
@@ -47,17 +44,5 @@ module.exports = {
         ]
       }
     ]
-  },
-
-  output: {
-    path: path.join(__dirname, '../public')
-  },
-
-  devtool: 'eval',
-
-  plugins: [
-    new webpack.DefinePlugin({
-      SPA_HOST: JSON.stringify(process.env.SPA_HOST || 'http://localhost:3000')
-    }),
-  ]
-};
+  }
+});

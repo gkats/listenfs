@@ -4,6 +4,7 @@ const helmet = require('helmet');
 const spa = require('./spa');
 
 const rootPath = process.env.ROOT_PATH;
+const staticPath = path.join(__dirname, '../../public');
 
 const app = express();
 app.disable('x-powered-by');
@@ -25,7 +26,7 @@ const helmetOptions =
       }
     : {};
 app.use(helmet(helmetOptions));
-app.use(express.static(path.join(__dirname, '../../public')));
+app.use(express.static(staticPath));
 app.use('/tracks', express.static(rootPath));
 app.use('/spa', spa);
 
