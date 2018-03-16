@@ -2,6 +2,8 @@ import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
 import { show } from './actions';
 import Link from '../Link/Link';
+import Loader from '../Loader/Loader';
+import css from './Artists.css';
 
 class Artist extends Component {
   componentDidMount() {
@@ -10,24 +12,32 @@ class Artist extends Component {
 
   render() {
     return (
-      <div>
-        <h1>{this.props.route.name}</h1>
+      <div class={css.wrapper}>
+        <h1 class={css.header}>{this.props.route.name}</h1>
         <div>
           {this.props.isLoading ? (
-            <div>Loading albums...</div>
+            <Loader visible={this.props.isLoading} />
           ) : this.props.albums.length ? (
-            this.props.albums.map(a => (
-              <div>
-                <Link
-                  href={`#/albums/${this.props.route.name}/${a}`}
-                  relative={true}
-                >
-                  {a}
-                </Link>
-              </div>
-            ))
+            <div class={css.albumList}>
+              {this.props.albums.map(a => (
+                <div key={a.name} class={css.albumListItem}>
+                  <Link
+                    href={`#/albums/${this.props.route.name}/${a.filename}`}
+                    relative={true}
+                    className={css.albumLink}
+                  >
+                    <div class={css.albumIcon}>
+                      <i class="fas fa-dot-circle" />
+                    </div>
+                    <div class={css.albumText}>
+                      {a.year} &sdot; {a.title}
+                    </div>
+                  </Link>
+                </div>
+              ))}
+            </div>
           ) : (
-            <div>No albums found.</div>
+            <div class={css.noneFound}>No albums found.</div>
           )}
         </div>
       </div>

@@ -1,0 +1,79 @@
+.wrapper {
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.artistList {
+  display: grid;
+  grid-gap: 0.1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.artistListItem {
+  display: block;
+  padding: 1em;
+  font-size: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.artistListItem:hover {
+  background-color: rgb(232, 232, 232);
+}
+
+.artistsLink {
+  display: block;
+  width: 100%;
+}
+
+.noneFound {
+  font-size: 18px;
+  padding: 2em;
+}
+
+.header {
+  font-size: 32px;
+  padding: 1em;
+}
+
+.albumList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 1em;
+}
+
+.albumListItem {
+  padding: 1rem;
+}
+
+.albumListItem:hover {
+  background-color: rgb(232, 232, 232);
+}
+
+.albumLink {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+.albumLink:hover {
+  text-decoration: none;
+}
+
+.albumIcon {
+  text-align: center;
+}
+
+.albumIcon i {
+  padding: 2rem;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  font-size: 46px;
+}
+
+.albumText {
+  font-weight: 500;
+}

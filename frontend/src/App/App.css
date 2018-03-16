@@ -1,0 +1,18 @@
+.wrapper {
+  position: relative;
+  min-height: 100%;
+  width: 100%;
+
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: .015em;
+  font-weight: 400;
+  text-transform: none;
+  font-family: Roboto,Helvetica Neue,Helvetica,Arial;
+  color: #000;
+}
+
+.container {
+  max-width: 1480px;
+  margin: 0 auto;
+}

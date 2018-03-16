@@ -2,6 +2,8 @@ import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
 import { index } from './actions';
 import Link from '../Link/Link';
+import Loader from '../Loader/Loader';
+import css from './Artists.css';
 
 class Artists extends Component {
   componentDidMount() {
@@ -10,19 +12,25 @@ class Artists extends Component {
 
   render() {
     return (
-      <div>
+      <div class={css.wrapper}>
         {this.props.isLoading ? (
-          <div>Loading artists...</div>
+          <Loader visible={this.props.isLoading} />
         ) : this.props.artists.length ? (
-          this.props.artists.map(a => (
-            <div>
-              <Link href={`#/artists/${a}`} relative={true}>
-                {a}
-              </Link>
-            </div>
-          ))
+          <div class={css.artistList}>
+            {this.props.artists.map(a => (
+              <div key={a} class={css.artistListItem}>
+                <Link
+                  href={`#/artists/${a}`}
+                  relative={true}
+                  className={css.artistsLink}
+                >
+                  {a}
+                </Link>
+              </div>
+            ))}
+          </div>
         ) : (
-          <div>No artists found.</div>
+          <div class={css.noneFound}>No artists found.</div>
         )}
       </div>
     );
