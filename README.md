@@ -6,7 +6,7 @@ __Environment variables__
 
 Name | Description
 ---- | ------------
-__ROOT_PATH__ | The full path to the directory which contains all the music files.
+__MUSIC_PATH__ | The full path to the directory which contains all the music files.
 __SPA_HOST__ | The URL the server is listening on. Used by the front-end for all "api" calls. Defaults to "http://localhost:3000".
 
 ## Frontend

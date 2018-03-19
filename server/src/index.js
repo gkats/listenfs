@@ -3,7 +3,6 @@ const express = require('express');
 const helmet = require('helmet');
 const spa = require('./spa');
 
-const rootPath = process.env.ROOT_PATH;
 const staticPath = path.join(__dirname, '../../public');
 
 const app = express();

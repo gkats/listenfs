@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const songFromFile = require('./songs').songFromFile;
 
-const rootPath = process.env.ROOT_PATH;
+const musicPath = process.env.MUSIC_PATH;
 
 const isDirectory = file => fs.statSync(file).isDirectory();
 
@@ -20,16 +20,16 @@ router.use((req, res, next) => {
 });
 
 router.get('/artists', (req, res, next) => {
-  fs.readdir(rootPath, (err, files) => {
+  fs.readdir(musicPath, (err, files) => {
     if (err) {
       return next(err);
     }
-    res.json(files.filter(f => isDirectory(path.join(rootPath, f))));
+    res.json(files.filter(f => isDirectory(path.join(musicPath, f))));
   });
 });
 
 router.get('/artists/:name', (req, res, next) => {
-  const artistPath = path.join(rootPath, req.params.name);
+  const artistPath = path.join(musicPath, req.params.name);
   fs.readdir(artistPath, (err, files) => {
     if (err) {
       return next(err);
@@ -50,7 +50,7 @@ router.get('/artists/:name', (req, res, next) => {
 
 router.get('/albums/:artistName/:albumName', (req, res, next) => {
   const { artistName, albumName } = req.params;
-  const albumPath = path.join(rootPath, artistName, albumName);
+  const albumPath = path.join(musicPath, artistName, albumName);
   fs.readdir(albumPath, (err, files) => {
     if (err) {
       return next(err);
