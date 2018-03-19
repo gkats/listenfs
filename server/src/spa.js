@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
+const songFromFile = require('./songs').songFromFile;
 
 const rootPath = process.env.ROOT_PATH;
 
@@ -21,8 +22,7 @@ router.use((req, res, next) => {
 router.get('/artists', (req, res, next) => {
   fs.readdir(rootPath, (err, files) => {
     if (err) {
-      next(err);
-      return;
+      return next(err);
     }
     res.json(files.filter(f => isDirectory(path.join(rootPath, f))));
   });
@@ -32,8 +32,7 @@ router.get('/artists/:name', (req, res, next) => {
   const artistPath = path.join(rootPath, req.params.name);
   fs.readdir(artistPath, (err, files) => {
     if (err) {
-      next(err);
-      return;
+      return next(err);
     }
     res.json(
       files.filter(f => isDirectory(path.join(artistPath, f))).map(f => {
@@ -57,20 +56,29 @@ router.get('/albums/:artistName/:albumName', (req, res, next) => {
   );
   fs.readdir(albumPath, (err, files) => {
     if (err) {
-      next(err);
-      return;
+      return next(err);
     }
-    res.json(
-      files.filter(f => isMp3(path.join(albumPath, f))).map(f => {
-        const songMatches = f.match(/^\d{2}/);
-
-        return {
-          number: songMatches ? songMatches[0] : '',
-          title: f.replace('.mp3', '').replace(/^\d{2}\.\s/, ''),
-          location: path.join(req.params.artistName, req.params.albumName, f)
-        };
-      })
-    );
+    const discs = files.filter(f => isDirectory(path.join(albumPath, f)));
+    if (discs.length) {
+      res.json(
+        discs.reduce(
+          (songs, disc) =>
+            songs.concat(
+              fs
+                .readdirSync(path.join(albumPath, disc))
+                .filter(f => isMp3(path.join(albumPath, disc, f)))
+                .map(f => songFromFile(f, path.join(albumPath, disc)))
+            ),
+          []
+        )
+      );
+    } else {
+      res.json(
+        files
+          .filter(f => isMp3(path.join(albumPath, f)))
+          .map(f => songFromFile(f, albumPath))
+      );
+    }
   });
 });
 
