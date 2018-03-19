@@ -46,7 +46,9 @@ class Player extends Component {
   seekClicked(e) {
     e.preventDefault();
     this.setState({
-      seekTo: (e.clientX - e.target.getBoundingClientRect().left) / e.target.clientWidth
+      seekTo:
+        (e.clientX - e.target.getBoundingClientRect().left) /
+        e.target.clientWidth
     });
   }
 

@@ -62,10 +62,10 @@ router.get('/albums/:artistName/:albumName', (req, res, next) => {
     }
     res.json(
       files.filter(f => isMp3(path.join(albumPath, f))).map(f => {
-        const trackMatches = f.match(/^\d{2}/);
+        const songMatches = f.match(/^\d{2}/);
 
         return {
-          number: trackMatches ? trackMatches[0] : '',
+          number: songMatches ? songMatches[0] : '',
           title: f.replace('.mp3', '').replace(/^\d{2}\.\s/, ''),
           location: path.join(req.params.artistName, req.params.albumName, f)
         };
