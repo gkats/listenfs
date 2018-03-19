@@ -27,7 +27,6 @@ const helmetOptions =
     : {};
 app.use(helmet(helmetOptions));
 app.use(express.static(staticPath));
-app.use('/tracks', express.static(rootPath));
 app.use('/spa', spa);
 
 app.listen(3000, () => console.log('Server listening on port 3000.'));
