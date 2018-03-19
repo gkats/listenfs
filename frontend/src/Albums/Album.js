@@ -109,7 +109,7 @@ class Album extends Component {
                 <Player
                   src={
                     this.state.currentSong
-                      ? `${this.props.spaHost}/tracks/${
+                      ? `${this.props.spaHost}/${
                           this.state.currentSong.location
                         }`
                       : null
