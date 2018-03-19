@@ -1,8 +1,8 @@
 import { show as apiShow } from './api';
 
-const showOk = tracks => ({
+const showOk = songs => ({
   type: 'ALBUMS_SHOW_OK',
-  tracks
+  songs
 });
 
 const showError = ({ message }) => ({

@@ -1,6 +1,6 @@
 const initialState = {
   isLoading: false,
-  tracks: []
+  songs: []
 };
 
 const artists = (state = initialState, action) => {
@@ -12,7 +12,7 @@ const artists = (state = initialState, action) => {
     case 'ALBUMS_SHOW_OK':
       return Object.assign({}, state, {
         isLoading: false,
-        tracks: action.tracks
+        songs: action.songs
       });
     case 'ALBUMS_SHOW_ERR':
       return Object.assign({}, state, {

@@ -6,12 +6,23 @@ import Loader from '../Loader/Loader';
 import Link from '../Link/Link';
 import css from './Albums.css';
 
+const getSongListItemClassName = (selectedSong, song) =>
+  `${css.songListItem} ${
+    selectedSong && selectedSong.title === song.title
+      ? css.songListItemSelected
+      : ''
+  }`;
+
 class Album extends Component {
   constructor() {
     super();
     this.state = {
-      currentTrack: null
+      currentSong: null,
+      isPlaying: false
     };
+    this.playClicked = this.playClicked.bind(this);
+    this.prevClicked = this.prevClicked.bind(this);
+    this.nextClicked = this.nextClicked.bind(this);
   }
 
   componentDidMount() {
@@ -19,8 +30,36 @@ class Album extends Component {
     this.props.show({ artistName, albumName });
   }
 
-  trackClicked(track) {
-    this.setState({ currentTrack: track.location });
+  songClicked(song) {
+    this.setState({
+      currentSong: song,
+      isPlaying: true
+    });
+  }
+
+  prevClicked() {
+    const currentIndex = this.getCurrentSongIndex();
+    if (currentIndex > 0) {
+      this.setState({ currentSong: this.props.songs[currentIndex - 1] });
+    }
+  }
+
+  nextClicked() {
+    const currentIndex = this.getCurrentSongIndex();
+    if (currentIndex < this.props.songs.length - 1) {
+      this.setState({ currentSong: this.props.songs[currentIndex + 1] });
+    }
+  }
+
+  playClicked() {
+    this.setState(state => ({
+      isPlaying: !state.isPlaying,
+      currentSong: state.currentSong || this.props.songs[0]
+    }));
+  }
+
+  getCurrentSongIndex() {
+    return this.props.songs.indexOf(this.state.currentSong);
   }
 
   render() {
@@ -42,44 +81,51 @@ class Album extends Component {
             </div>
             <div class={css.mediaDetails}>
               {albumYearMatches ? albumYearMatches[1] : ''}
-              &sdot;
-              {this.props.tracks.length} songs
+              &nbsp; &bull; &nbsp;
+              {this.props.songs.length} songs
             </div>
-          </div>
-          <div class={css.actions}>
-            <button class={css.playBtn}>Play</button>
           </div>
         </div>
         {this.props.isLoading ? (
           <Loader visible={this.props.isLoading} />
-        ) : this.props.tracks.length ? (
+        ) : this.props.songs.length ? (
           <div>
-            <div class={css.trackList}>
-              {this.props.tracks.map(t => (
+            <div class={css.songList}>
+              {this.props.songs.map(s => (
                 <div
-                  key={t.title}
-                  onClick={this.trackClicked.bind(this, t)}
-                  class={css.trackListItem}
+                  key={s.title}
+                  onClick={this.songClicked.bind(this, s)}
+                  class={getSongListItemClassName(this.state.currentSong, s)}
                 >
-                  <div class={css.trackNumber}>
-                    {t.number ? `${parseInt(t.number, 10)}.` : '-'}
+                  <div class={css.songNumber}>
+                    {s.number ? `${parseInt(s.number, 10)}.` : '-'}
                   </div>
-                  <div class={css.trackTitle}>{t.title}</div>
+                  <div class={css.songTitle}>{s.title}</div>
                 </div>
               ))}
             </div>
-            <div class={css.player}>
-              <Player
-                src={
-                  this.state.currentTrack
-                    ? `${this.props.spaHost}/tracks/${this.state.currentTrack}`
-                    : null
-                }
-              />
+            <div class={css.playerContainer}>
+              <div class={css.player}>
+                <Player
+                  src={
+                    this.state.currentSong
+                      ? `${this.props.spaHost}/tracks/${
+                          this.state.currentSong.location
+                        }`
+                      : null
+                  }
+                  onPrev={this.prevClicked}
+                  onNext={this.nextClicked}
+                  onPlay={this.playClicked}
+                  isPrevDisabled={!this.state.currentSong}
+                  isNextDisabled={!this.state.currentSong}
+                  isPlaying={this.state.isPlaying}
+                />
+              </div>
             </div>
           </div>
         ) : (
-          <div>No tracks found.</div>
+          <div class={css.noneFound}>No songs found.</div>
         )}
       </div>
     );
@@ -88,7 +134,7 @@ class Album extends Component {
 
 const mapStateToProps = ({ albums, config }) => ({
   isLoading: albums.isLoading,
-  tracks: albums.tracks,
+  songs: albums.songs,
   spaHost: config.spaHost
 });
 

@@ -36,54 +36,32 @@
 
 }
 
-.actions {
-  align-self: flex-end;
-}
-
-.playBtn {
-  background-color: rgb(28, 184, 65);
-  color: #fff;
-  border-radius: 4px;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-  font-family: inherit;
-  font-size: 100%;
-  padding: .5em 1em;
-  border: 1px solid #999;
-  border: transparent;
-  text-decoration: none;
-  cursor: pointer;
-  display: inline-block;
-  zoom: 1;
-  white-space: nowrap;
-  vertical-align: middle;
-  text-align: center;
-  cursor: pointer;
-  -webkit-user-drag: none;
-  user-select: none;
-}
-
-.trackList {
+.songList {
   padding: 2rem;
   display: grid;
-  margin-bottom: 1.5em;
+  margin-bottom: 5em;
 }
 
-.trackListItem {
+.songListItem {
   display: flex;
   align-content: center;
   padding: 1em;
   cursor: pointer;
 }
 
-.trackListItem:hover {
+.songListItem:hover {
   background-color: #ddd;
 }
 
-.trackTitle {
+.songListItemSelected {
+  background-color: #ddd;
+}
+
+.songTitle {
   font-weight: 600;
 }
 
-.trackNumber {
+.songNumber {
   font-feature-settings: "tnum";
   letter-spacing: 0;
   text-align: right;
@@ -96,6 +74,17 @@
   padding: 2em;
 }
 
-.player {
+.playerContainer {
   width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 101;
+  background-color: #333;
+}
+
+.player {
+  height: auto;
+  border-top: 1px solid #ddd;
+  color: #fff;
 }

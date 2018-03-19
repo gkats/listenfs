@@ -30,7 +30,7 @@ class Artist extends Component {
                       <i class="fas fa-dot-circle" />
                     </div>
                     <div class={css.albumText}>
-                      {a.year} &sdot; {a.title}
+                      {a.year} &bull; {a.title}
                     </div>
                   </Link>
                 </div>

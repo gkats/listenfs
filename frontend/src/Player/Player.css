@@ -1,3 +1,101 @@
 .player {
   width: 100%;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.controlsButtons {
+  margin-bottom: 12px;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  grid-gap: 0.5rem;
+}
+
+.control {
+  background-color: transparent;
+  border: none;
+  color: hsla(0,0%,100%,.6);
+  width: 32px;
+  min-width: 32px;
+  height: 32px;
+  position: relative;
+  cursor: pointer;
+}
+
+.control:hover {
+  border: 1px solid transparent;
+  border-color: #fff;
+  border-radius: 50%;
+}
+
+.control:active:hover {
+  border-color: #ddd;
+  color: #ccc;
+}
+
+.controlDisabled {
+  color: #555;
+  cursor: default;
+}
+
+.controlDisabled:hover {
+  border-color: transparent;
+  color: #555;
+  cursor: default;
+}
+
+.controlPlay {
+  composes: control;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+}
+
+.progressContainer {
+  max-width: 720px;
+  width: 100%;
+}
+
+.progress {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progressTime {
+  font-feature-settings: "tnum";
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+.progressBar {
+  width: 100%;
+  height: 12px;
+}
+
+.progressBarBg {
+  background-color: #404040;
+  width: 100%;
+  height: 4px;
+  display: flex;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.progressBarFg {
+  transition-property: background-color;
+  transition-duration: .1s;
+  transition-timing-function: cubic-bezier(1,0,.7,1);
+  background-color: #a0a0a0;
+  border-radius: 2px;
+  height: 4px;
+  width: 0;
 }
