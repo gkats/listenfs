@@ -62,7 +62,7 @@ class Album extends Component {
 
   render() {
     const { artistName, albumName } = this.props.route;
-    const albumYearMatches = albumName.match(/^\((\d{4})\)/);
+    const albumYearMatches = albumName.match(/^\((\d{4})_?\d?\)/);
 
     return (
       <div class={css.wrapper}>

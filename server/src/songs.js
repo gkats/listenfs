@@ -11,7 +11,7 @@ const songFromFile = (file, parentFolder) => {
       .update(location)
       .digest('hex'),
     number: songMatches ? songMatches[0] : '',
-    title: file.replace('.mp3', '').replace(/^\d{2}\.\s/, ''),
+    title: file.replace('.mp3', '').replace(/^\d{2,}\.\s/, ''),
     location
   };
 };

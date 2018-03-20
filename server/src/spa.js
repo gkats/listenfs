@@ -36,7 +36,7 @@ router.get('/artists/:name', (req, res, next) => {
     }
     res.json(
       files.filter(f => isDirectory(path.join(artistPath, f))).map(f => {
-        const yearMatches = f.match(/^\((\d+)\)/);
+        const yearMatches = f.match(/^\((\d+)_?\d?\)/);
 
         return {
           title: f.replace(/\(.+\)\s/, ''),
