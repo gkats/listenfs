@@ -8,9 +8,7 @@ import css from './Albums.css';
 
 const getSongListItemClassName = (selectedSong, song) =>
   `${css.songListItem} ${
-    selectedSong && selectedSong.title === song.title
-      ? css.songListItemSelected
-      : ''
+    selectedSong && selectedSong.id === song.id ? css.songListItemSelected : ''
   }`;
 
 class Album extends Component {
@@ -93,7 +91,7 @@ class Album extends Component {
             <div class={css.songList}>
               {this.props.songs.map(s => (
                 <div
-                  key={s.title}
+                  key={s.id}
                   onClick={this.songClicked.bind(this, s)}
                   class={getSongListItemClassName(this.state.currentSong, s)}
                 >
