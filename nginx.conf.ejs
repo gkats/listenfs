@@ -9,14 +9,14 @@ server {
   location ~ /(assets|icons) {
     root <%= APP_PATH %>;
     sendfile on;
-    senfile_max_chunk 1m;
+    sendfile_max_chunk 1m;
     tcp_nopush on;
   }
 
   location ~ \.mp3$ {
     root <%= MUSIC_PATH %>;
     sendfile on;
-    senfile_max_chunk 1m;
+    sendfile_max_chunk 1m;
     tcp_nopush on;
     autoindex off;
   }
