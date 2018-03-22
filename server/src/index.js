@@ -2,14 +2,16 @@ const path = require('path');
 const express = require('express');
 const helmet = require('helmet');
 const spa = require('./spa');
+const errors = require('./errors');
 
 const staticPath = path.join(__dirname, '../../public');
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 app.disable('x-powered-by');
 
 const helmetOptions =
-  process.env.NODE_ENV === 'production'
+  app.get('env') === 'production'
     ? {
         contentSecurityPolicy: {
           directives: {
@@ -28,4 +30,10 @@ app.use(helmet(helmetOptions));
 app.use(express.static(staticPath));
 app.use('/spa', spa);
 
-app.listen(3000, () => console.log('Server listening on port 3000.'));
+// Add an extra layer of error handling in development
+if (app.get('env') === 'development') {
+  app.use(errors.devHandler);
+}
+app.use(errors.handler);
+
+app.listen(PORT, () => console.log('Server listening on port 3000.'));
