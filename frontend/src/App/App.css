@@ -16,3 +16,12 @@
   max-width: 1480px;
   margin: 0 auto;
 }
+
+.menu {
+  display: flex;
+  justify-content: flex-end;
+  padding: 6px 25px;
+  width: 100%;
+  color: #fff;
+  background-color: #333;
+}
