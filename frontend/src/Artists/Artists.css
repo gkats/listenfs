@@ -14,9 +14,7 @@
   display: block;
   padding: 1em;
   font-size: 18px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  min-height: 40px;
 }
 
 .artistListItem:hover {
