@@ -113,7 +113,7 @@ class Player extends Component {
           src={this.props.src}
           isPlaying={this.props.isPlaying}
           seekTo={this.state.seekTo}
-          onEnd={this.nextClicked}
+          onEnd={this.props.onNext}
           onTimeUpdate={this.timeChanged}
           onMetadataLoaded={this.metadataLoaded}
         />

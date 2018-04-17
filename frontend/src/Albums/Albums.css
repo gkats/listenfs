@@ -40,6 +40,7 @@
   padding: 2rem;
   display: grid;
   margin-bottom: 5em;
+  overflow-y: scroll;
 }
 
 .songListItem {
