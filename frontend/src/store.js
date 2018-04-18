@@ -4,12 +4,14 @@ import { Provider } from 'preact-redux';
 import thunk from 'redux-thunk';
 import artists from './Artists/reducer';
 import albums from './Albums/reducer';
+import player from './Player/reducer';
 
 export const configureStore = (persistedState = {}) =>
   createStore(
     combineReducers({
       artists,
       albums,
+      player,
       config: (state = {}, action) => state
     }),
     persistedState,

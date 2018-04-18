@@ -21,7 +21,21 @@
   display: flex;
   justify-content: flex-end;
   padding: 6px 25px;
-  width: 100%;
   color: #fff;
   background-color: #333;
+}
+
+.playerContainer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 101;
+  background-color: #333;
+}
+
+.player {
+  height: auto;
+  border-top: 1px solid #ddd;
+  color: #fff;
 }

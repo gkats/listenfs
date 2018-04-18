@@ -1,4 +1,6 @@
 import { h, Component } from 'preact';
+import { connect } from 'preact-redux';
+import { play, pause } from './actions';
 import css from './Player.css';
 import AudioPlayer from '../Audio/Audio';
 
@@ -21,6 +23,7 @@ class Player extends Component {
     this.timeChanged = this.timeChanged.bind(this);
     this.metadataLoaded = this.metadataLoaded.bind(this);
     this.seekClicked = this.seekClicked.bind(this);
+    this.next = this.next.bind(this);
     this.state = {
       currentTime: 0,
       duration: 0,
@@ -30,17 +33,24 @@ class Player extends Component {
 
   playClicked(e) {
     e.preventDefault();
-    this.props.onPlay();
+    if (this.props.isPlaying) {
+      this.props.pause();
+    } else {
+      this.props.play(this.props.currentSong || this.props.songs[0]);
+    }
   }
 
   prevClicked(e) {
     e.preventDefault();
-    this.props.onPrev();
+    const currentIndex = this.getCurrentSongIndex();
+    if (currentIndex > 0) {
+      this.props.play(this.props.songs[currentIndex - 1]);
+    }
   }
 
   nextClicked(e) {
     e.preventDefault();
-    this.props.onNext();
+    this.next();
   }
 
   seekClicked(e) {
@@ -60,18 +70,29 @@ class Player extends Component {
     this.setState({ duration });
   }
 
+  next() {
+    const currentIndex = this.getCurrentSongIndex();
+    if (currentIndex < this.props.songs.length - 1) {
+      this.props.play(this.props.songs[currentIndex + 1]);
+    }
+  }
+
+  getCurrentSongIndex() {
+    return this.props.songs.indexOf(this.props.currentSong);
+  }
+
   render() {
     const progressBarWidth = this.state.currentTime * 100 / this.state.duration;
-
+    console.log(this.props.currentSong);
     return (
       <div class={css.playerContainer}>
         <div class={css.player}>
           <div class={css.controls}>
             <div class={css.controlsButtons}>
               <button
-                class={getControlClassName(this.props.isPrevDisabled)}
+                class={getControlClassName(!this.props.currentSong)}
                 onClick={this.prevClicked}
-                disabled={this.props.isPrevDisabled}
+                disabled={!this.props.currentSong}
               >
                 <i class="fas fa-step-backward" />
               </button>
@@ -81,9 +102,9 @@ class Player extends Component {
                 />
               </button>
               <button
-                class={getControlClassName(this.props.isNextDisabled)}
+                class={getControlClassName(!this.props.currentSong)}
                 onClick={this.nextClicked}
-                disabled={this.props.isNextDisabled}
+                disabled={!this.props.currentSong}
               >
                 <i class="fas fa-step-forward" />
               </button>
@@ -110,10 +131,14 @@ class Player extends Component {
         </div>
 
         <AudioPlayer
-          src={this.props.src}
+          src={
+            this.props.currentSong
+              ? `${this.props.spaHost}/${this.props.currentSong.location}`
+              : null
+          }
           isPlaying={this.props.isPlaying}
           seekTo={this.state.seekTo}
-          onEnd={this.props.onNext}
+          onEnd={this.next}
           onTimeUpdate={this.timeChanged}
           onMetadataLoaded={this.metadataLoaded}
         />
@@ -122,15 +147,11 @@ class Player extends Component {
   }
 }
 
-Player.defaultProps = {
-  src: null,
-  isPlaying: false,
-  isPrevDisabled: false,
-  isNextDisabled: false,
-  onPrev: () => {},
-  onNext: () => {},
-  onPlay: () => {},
-  onProgress: () => {}
-};
+const mapStateToProps = ({ player, albums, config }) => ({
+  songs: albums.songs,
+  currentSong: player.currentSong,
+  isPlaying: player.isPlaying,
+  spaHost: config.spaHost
+});
 
-export default Player;
+export default connect(mapStateToProps, { play, pause })(Player);
