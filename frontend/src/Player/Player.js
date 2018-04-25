@@ -17,6 +17,7 @@ const formatTime = t => {
 class Player extends Component {
   constructor() {
     super();
+    this.keyPressed = this.keyPressed.bind(this);
     this.playClicked = this.playClicked.bind(this);
     this.prevClicked = this.prevClicked.bind(this);
     this.nextClicked = this.nextClicked.bind(this);
@@ -31,13 +32,24 @@ class Player extends Component {
     };
   }
 
+  componentDidMount() {
+    window.document.addEventListener('keypress', this.keyPressed);
+  }
+
+  componentWillUnmount() {
+    window.document.removeEventListener('keypress', this.keyPressed);
+  }
+
+  keyPressed(e) {
+    if (e.key === 32 || e.keyCode === 32) {
+      e.preventDefault();
+      this.play();
+    }
+  }
+
   playClicked(e) {
     e.preventDefault();
-    if (this.props.isPlaying) {
-      this.props.pause();
-    } else {
-      this.props.play(this.props.currentSong || this.props.songs[0]);
-    }
+    this.play();
   }
 
   prevClicked(e) {
@@ -70,6 +82,14 @@ class Player extends Component {
     this.setState({ duration });
   }
 
+  play() {
+    if (this.props.isPlaying) {
+      this.props.pause();
+    } else {
+      this.props.play(this.props.currentSong || this.props.songs[0]);
+    }
+  }
+
   next() {
     const currentIndex = this.getCurrentSongIndex();
     if (currentIndex < this.props.songs.length - 1) {
@@ -83,7 +103,7 @@ class Player extends Component {
 
   render() {
     const progressBarWidth = this.state.currentTime * 100 / this.state.duration;
-    console.log(this.props.currentSong);
+
     return (
       <div class={css.playerContainer}>
         <div class={css.player}>
