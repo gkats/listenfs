@@ -168,7 +168,7 @@ class Player extends Component {
 }
 
 const mapStateToProps = ({ player, albums, config }) => ({
-  songs: albums.songs,
+  songs: (albums.album || {}).songs || [],
   currentSong: player.currentSong,
   isPlaying: player.isPlaying,
   spaHost: config.spaHost

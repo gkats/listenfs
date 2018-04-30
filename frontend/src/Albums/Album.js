@@ -23,15 +23,12 @@ class Album extends Component {
 
   render() {
     const { artistName, albumName } = this.props.route;
-    const albumYearMatches = albumName.match(/^\((\d{4})_?\d?\)/);
 
     return (
       <div class={css.wrapper}>
         <div class={css.banner}>
           <div class={css.mediaInfo}>
-            <div class={css.mediaTitle}>
-              {albumName.replace(/^\(.+\)\s/, '')}
-            </div>
+            <div class={css.mediaTitle}>{this.props.album.title}</div>
             <div>
               <span class={css.text}>by</span>&nbsp;
               <Link href={`#/artists/${artistName}`} relative={true}>
@@ -39,7 +36,7 @@ class Album extends Component {
               </Link>
             </div>
             <div class={css.mediaDetails}>
-              {albumYearMatches ? albumYearMatches[1] : ''}
+              {this.props.album.year}
               &nbsp; &bull; &nbsp;
               {this.props.songs.length} songs
             </div>
@@ -74,7 +71,8 @@ class Album extends Component {
 
 const mapStateToProps = ({ albums, player }) => ({
   isLoading: albums.isLoading,
-  songs: albums.songs,
+  album: albums.album,
+  songs: (albums.album || {}).songs || [],
   currentSong: player.currentSong
 });
 

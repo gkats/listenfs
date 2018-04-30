@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const songFromFile = require('./songs').songFromFile;
+const albumFromFolder = require('./albums').albumFromFolder;
 
 const musicPath = process.env.MUSIC_PATH;
 
@@ -35,15 +36,9 @@ router.get('/artists/:name', (req, res, next) => {
       return next(err);
     }
     res.json(
-      files.filter(f => isDirectory(path.join(artistPath, f))).map(f => {
-        const yearMatches = f.match(/^\((\d+)_?\d?\)/);
-
-        return {
-          title: f.replace(/\(.+\)\s/, ''),
-          year: yearMatches ? yearMatches[1] : '',
-          filename: f
-        };
-      })
+      files
+        .filter(f => isDirectory(path.join(artistPath, f)))
+        .map(f => albumFromFolder(f))
     );
   });
 });
@@ -51,33 +46,34 @@ router.get('/artists/:name', (req, res, next) => {
 router.get('/albums/:artistName/:albumName', (req, res, next) => {
   const { artistName, albumName } = req.params;
   const albumPath = path.join(musicPath, artistName, albumName);
+
   fs.readdir(albumPath, (err, files) => {
     if (err) {
       return next(err);
     }
     const discs = files.filter(f => isDirectory(path.join(albumPath, f)));
+
     if (discs.length) {
-      res.json(
-        discs.reduce(
-          (songs, disc) =>
-            songs.concat(
-              fs
-                .readdirSync(path.join(albumPath, disc))
-                .filter(f => isMp3(path.join(albumPath, disc, f)))
-                .map(f =>
-                  songFromFile(f, path.join(artistName, albumName, disc))
-                )
-            ),
-          []
-        )
+      songsJson = discs.reduce(
+        (songs, disc) =>
+          songs.concat(
+            fs
+              .readdirSync(path.join(albumPath, disc))
+              .filter(f => isMp3(path.join(albumPath, disc, f)))
+              .map(f => songFromFile(f, path.join(artistName, albumName, disc)))
+          ),
+        []
       );
     } else {
-      res.json(
-        files
-          .filter(f => isMp3(path.join(albumPath, f)))
-          .map(f => songFromFile(f, path.join(artistName, albumName)))
-      );
+      songsJson = files
+        .filter(f => isMp3(path.join(albumPath, f)))
+        .map(f => songFromFile(f, path.join(artistName, albumName)));
     }
+    res.json(
+      Object.assign({}, albumFromFolder(albumName), {
+        songs: songsJson
+      })
+    );
   });
 });
 
