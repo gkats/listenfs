@@ -54,3 +54,17 @@ $ npm start
 ```
 
 When in production we have strict security policies for javascript execution and CSS loading.
+
+## Deployment
+
+1. Install [nginx](https://www.nginx.com/). Make sure it starts whenever you boot into your OS.
+2. Install [pm2](https://pm2.keymetrics.io/). `$ npm install pm2 -g`
+3. Run `$ npm run config` to generate the configuration files for nginx (`listenfs.conf`) and pm2 (`process.config.js`). Make sure you set environment variables accordingly. An example run would be:
+```
+$ MUSIC_PATH=/path/to/music npm run config
+```
+4. Copy the nginx configuration file (`listenfs.conf`) to the directory with your nginx configurations. Usually this is `/etc/nginx/conf.d`. Reload nginx.
+5. Build the front-end app bundle. Run `$ cd frontend/ && SPA_HOST=https://server-url npm run build`.
+6. Start the back-end server. This needs to run only for cold deployments. Run `$ pm2 start process.config.js`. Save a dump for pm2 with `$ pm2 save`.
+7. Run `$ pm2 startup systemd` to have your app started on boot. This will generate a service file in `/etc/systemd/system/pm2-user.service`. Feel free to rename the file to `listenfs.service` and edit the description or other fields as you see fit. The server will now run on each boot.
+

@@ -1,0 +1,14 @@
+module.exports = {
+  apps: [
+    {
+      name: 'listenfs',
+      script: 'server/src/index.js',
+      env: {
+        MUSIC_PATH: '<%= MUSIC_PATH %>'
+      },
+      env_production: {
+        NODE_ENV: 'production'
+      }
+    }
+  ]
+}

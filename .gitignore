@@ -1,2 +1,4 @@
 node_modules
 public/*update*.js*
+nginx.conf
+process.config.js

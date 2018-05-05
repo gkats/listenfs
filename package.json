@@ -1,0 +1,20 @@
+{
+  "name": "listenfs",
+  "version": "1.0.0",
+  "description": "Turn your local filesystem into a music server",
+  "scripts": {
+    "config": "node config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gkats/listenfs.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gkats/listenfs/issues"
+  },
+  "homepage": "https://github.com/gkats/listenfs#readme",
+  "dependencies": {
+    "ejs": "^2.5.9"
+  }
+}
