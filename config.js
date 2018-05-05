@@ -20,4 +20,4 @@ function writeFile(inName, outName) {
 }
 
 writeFile('process.config.ejs', 'process.config.js');
-writeFile('nginx.conf.ejs', 'nginx.conf');
+writeFile('nginx.conf.ejs', 'listenfs.conf');

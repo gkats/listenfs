@@ -1,4 +1,4 @@
 node_modules
 public/*update*.js*
-nginx.conf
+listenfs.conf
 process.config.js
