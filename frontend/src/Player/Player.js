@@ -3,6 +3,7 @@ import { connect } from 'preact-redux';
 import { play, pause } from './actions';
 import css from './Player.css';
 import AudioPlayer from '../Audio/Audio';
+import Link from '../Link/Link';
 
 const getControlClassName = isDisabled =>
   `${css.control} ${isDisabled ? css.controlDisabled : ''}`;
@@ -103,6 +104,7 @@ class Player extends Component {
 
   render() {
     const progressBarWidth = this.state.currentTime * 100 / this.state.duration;
+    const { artistName, cover } = this.props.album;
 
     return (
       <div class={css.playerContainer}>
@@ -111,20 +113,36 @@ class Player extends Component {
             {this.props.currentSong ? (
               <div class={css.mediaInfo}>
                 <div class={css.mediaInfoCoverContainer}>
-                  {this.props.album.cover ? (
-                    <img src={this.props.album.cover} />
+                  {cover ? (
+                    <img src={cover} />
                   ) : (
                     <div class={css.mediaInfoCover}>
-                      <i class="fas fa-dot-circle" />
+                      <Link
+                        href={`#/albums/${artistName}/${
+                          this.props.album.filename
+                        }`}
+                        relative={true}
+                      >
+                        <i class="fas fa-dot-circle" />
+                      </Link>
                     </div>
                   )}
                 </div>
                 <div>
                   <div class={css.mediaInfoSongTitle}>
-                    {this.props.currentSong.title}
+                    <Link
+                      href={`#/albums/${artistName}/${
+                        this.props.album.filename
+                      }`}
+                      relative={true}
+                    >
+                      {this.props.currentSong.title}
+                    </Link>
                   </div>
                   <div class={css.mediaInfoArtistName}>
-                    {this.props.album.artistName}
+                    <Link href={`#/artists/${artistName}`} relative={true}>
+                      {artistName}
+                    </Link>
                   </div>
                 </div>
               </div>
