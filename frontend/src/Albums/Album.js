@@ -53,6 +53,11 @@ class Album extends Component {
                   onClick={this.songClicked.bind(this, s)}
                   class={getSongListItemClassName(this.props.currentSong, s)}
                 >
+                  <div class={css.songIcon}>
+                    {this.props.currentSong === s ? (
+                      <i class="fas fa-play" />
+                    ) : null}
+                  </div>
                   <div class={css.songNumber}>
                     {s.number ? `${parseInt(s.number, 10)}.` : '-'}
                   </div>

@@ -107,6 +107,29 @@ class Player extends Component {
     return (
       <div class={css.playerContainer}>
         <div class={css.player}>
+          <div class={css.mediaInfoContainer}>
+            {this.props.currentSong ? (
+              <div class={css.mediaInfo}>
+                <div class={css.mediaInfoCoverContainer}>
+                  {this.props.album.cover ? (
+                    <img src={this.props.album.cover} />
+                  ) : (
+                    <div class={css.mediaInfoCover}>
+                      <i class="fas fa-dot-circle" />
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <div class={css.mediaInfoSongTitle}>
+                    {this.props.currentSong.title}
+                  </div>
+                  <div class={css.mediaInfoArtistName}>
+                    {this.props.album.artistName}
+                  </div>
+                </div>
+              </div>
+            ) : null}
+          </div>
           <div class={css.controls}>
             <div class={css.controlsButtons}>
               <button
@@ -148,6 +171,7 @@ class Player extends Component {
               </div>
             </div>
           </div>
+          <div class={css.actions} />
         </div>
 
         <AudioPlayer
@@ -170,6 +194,7 @@ class Player extends Component {
 const mapStateToProps = ({ player, albums, config }) => ({
   songs: (albums.album || {}).songs || [],
   currentSong: player.currentSong,
+  album: albums.album || {},
   isPlaying: player.isPlaying,
   spaHost: config.spaHost
 });

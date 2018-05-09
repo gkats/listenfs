@@ -45,7 +45,7 @@ router.get('/artists/:name', (req, res, next) => {
     res.json(
       files
         .filter(f => isDirectory(path.join(artistPath, f)))
-        .map(f => albumFromFolder(f))
+        .map(f => albumFromFolder(f, artistPath))
     );
   });
 });
@@ -77,7 +77,7 @@ router.get('/albums/:artistName/:albumName', (req, res, next) => {
         .map(f => songFromFile(f, path.join(artistName, albumName)));
     }
     res.json(
-      Object.assign({}, albumFromFolder(albumName), {
+      Object.assign({}, albumFromFolder(albumName, artistName), {
         songs: songsJson
       })
     );

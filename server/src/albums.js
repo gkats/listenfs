@@ -3,7 +3,7 @@ const crypto = require('crypto');
 
 const YEAR_REGEX = /^\((\d+)_?\d?\)\s/;
 
-const albumFromFolder = folder => {
+const albumFromFolder = (folder, artistName) => {
   const yearMatches = folder.match(YEAR_REGEX);
 
   return {
@@ -13,7 +13,9 @@ const albumFromFolder = folder => {
       .digest('hex'),
     title: folder.replace(YEAR_REGEX, ''),
     year: yearMatches ? yearMatches[1] : '',
-    filename: folder
+    filename: folder,
+    cover: null,
+    artistName
   };
 };
 
