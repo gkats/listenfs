@@ -8,7 +8,14 @@ const musicPath = process.env.MUSIC_PATH;
 
 const isDirectory = file => fs.statSync(file).isDirectory();
 
-const isMp3 = file => fs.statSync(file).isFile() && file.endsWith('.mp3');
+const isHidden = file =>
+  file
+    .split(path.sep)
+    .pop()
+    .startsWith('.');
+
+const isMp3 = file =>
+  fs.statSync(file).isFile() && file.endsWith('.mp3') && !isHidden(file);
 
 const router = express.Router();
 
