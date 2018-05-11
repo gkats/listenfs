@@ -13,7 +13,7 @@ server {
     tcp_nopush on;
   }
 
-  location ~ \.mp3$ {
+  location ~ \.(mp3|png|jpe?g)$ {
     root <%= MUSIC_PATH %>;
     sendfile on;
     sendfile_max_chunk 1m;

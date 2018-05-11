@@ -1,5 +1,5 @@
 .player {
-  padding: 1rem;
+  padding: 0.7rem;
   display: grid;
   grid-template-columns: 25% 50% 25%;
 }
@@ -16,7 +16,6 @@
 }
 
 .mediaInfoCoverContainer {
-  padding: 6px;
   padding-right: 6px;
 }
 
@@ -32,8 +31,8 @@
   font-size: 30px;
   background-color: hsla(0,0%,100%,.6);
   color: #333;
-  width: 36px;
-  height: 36px;
+  width: 56px;
+  height: 56px;
   display: flex;
   justify-content: center;
   align-items: center;

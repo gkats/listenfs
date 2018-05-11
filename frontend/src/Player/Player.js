@@ -114,7 +114,7 @@ class Player extends Component {
               <div class={css.mediaInfo}>
                 <div class={css.mediaInfoCoverContainer}>
                   {cover ? (
-                    <img src={cover} />
+                    <img width={56} height={56} src={cover} />
                   ) : (
                     <div class={css.mediaInfoCover}>
                       <Link
