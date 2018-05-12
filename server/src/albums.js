@@ -4,7 +4,7 @@ const crypto = require('crypto');
 
 const YEAR_REGEX = /^\((\d+)_?\d?\)\s/;
 
-const getCover = (relativeFolder, root) => {
+const getAlbumCover = (relativeFolder, root) => {
   let cover = null;
   for (let filename of ['folder', 'cover']) {
     for (let extension of ['png', 'jpg', 'jpeg']) {
@@ -28,7 +28,7 @@ const albumFromFolder = (folder, artistName, root) => {
     title: folder.replace(YEAR_REGEX, ''),
     year: yearMatches ? yearMatches[1] : '',
     artistName,
-    cover: getCover(path.join(artistName, folder), root),
+    cover: getAlbumCover(path.join(artistName, folder), root),
     filename: folder
   };
 };

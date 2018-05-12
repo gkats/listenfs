@@ -1,9 +1,10 @@
 import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
 import { play, pause } from './actions';
-import css from './Player.css';
+import MediaInfo from './MediaInfo';
 import AudioPlayer from '../Audio/Audio';
-import Link from '../Link/Link';
+
+import css from './Player.css';
 
 const getControlClassName = isDisabled =>
   `${css.control} ${isDisabled ? css.controlDisabled : ''}`;
@@ -104,48 +105,13 @@ class Player extends Component {
 
   render() {
     const progressBarWidth = this.state.currentTime * 100 / this.state.duration;
-    const { artistName, cover } = this.props.album;
 
     return (
       <div class={css.playerContainer}>
         <div class={css.player}>
           <div class={css.mediaInfoContainer}>
             {this.props.currentSong ? (
-              <div class={css.mediaInfo}>
-                <div class={css.mediaInfoCoverContainer}>
-                  {cover ? (
-                    <img width={56} height={56} src={cover} />
-                  ) : (
-                    <div class={css.mediaInfoCover}>
-                      <Link
-                        href={`#/albums/${artistName}/${
-                          this.props.album.filename
-                        }`}
-                        relative={true}
-                      >
-                        <i class="fas fa-dot-circle" />
-                      </Link>
-                    </div>
-                  )}
-                </div>
-                <div>
-                  <div class={css.mediaInfoSongTitle}>
-                    <Link
-                      href={`#/albums/${artistName}/${
-                        this.props.album.filename
-                      }`}
-                      relative={true}
-                    >
-                      {this.props.currentSong.title}
-                    </Link>
-                  </div>
-                  <div class={css.mediaInfoArtistName}>
-                    <Link href={`#/artists/${artistName}`} relative={true}>
-                      {artistName}
-                    </Link>
-                  </div>
-                </div>
-              </div>
+              <MediaInfo {...this.props.currentSong} />
             ) : null}
           </div>
           <div class={css.controls}>
@@ -212,7 +178,6 @@ class Player extends Component {
 const mapStateToProps = ({ player, albums, config }) => ({
   songs: (albums.album || {}).songs || [],
   currentSong: player.currentSong,
-  album: albums.album || {},
   isPlaying: player.isPlaying,
   spaHost: config.spaHost
 });

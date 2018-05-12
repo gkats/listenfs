@@ -50,9 +50,9 @@ router.get('/artists/:name', (req, res, next) => {
   });
 });
 
-router.get('/albums/:artistName/:albumName', (req, res, next) => {
-  const { artistName, albumName } = req.params;
-  const albumPath = path.join(musicPath, artistName, albumName);
+router.get('/albums/:artistName/:albumTitle', (req, res, next) => {
+  const { artistName, albumTitle } = req.params;
+  const albumPath = path.join(musicPath, artistName, albumTitle);
 
   fs.readdir(albumPath, (err, files) => {
     if (err) {
@@ -67,17 +67,29 @@ router.get('/albums/:artistName/:albumName', (req, res, next) => {
             fs
               .readdirSync(path.join(albumPath, disc))
               .filter(f => isMp3(path.join(albumPath, disc, f)))
-              .map(f => songFromFile(f, path.join(artistName, albumName, disc)))
+              .map(f =>
+                Object.assign(
+                  {},
+                  songFromFile(f, path.join(artistName, albumTitle, disc)),
+                  {
+                    album: albumFromFolder(albumTitle, artistName, musicPath),
+                    artistName
+                  }
+                )
+              )
           ),
         []
       );
     } else {
-      songsJson = files
-        .filter(f => isMp3(path.join(albumPath, f)))
-        .map(f => songFromFile(f, path.join(artistName, albumName)));
+      songsJson = files.filter(f => isMp3(path.join(albumPath, f))).map(f =>
+        Object.assign({}, songFromFile(f, path.join(artistName, albumTitle)), {
+          album: albumFromFolder(albumTitle, artistName, musicPath),
+          artistName
+        })
+      );
     }
     res.json(
-      Object.assign({}, albumFromFolder(albumName, artistName, musicPath), {
+      Object.assign({}, albumFromFolder(albumTitle, artistName, musicPath), {
         songs: songsJson
       })
     );
