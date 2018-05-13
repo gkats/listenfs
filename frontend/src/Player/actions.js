@@ -1,6 +1,6 @@
-export const play = song => ({
+export const play = track => ({
   type: 'PLAYER_PLAY',
-  song
+  track
 });
 
 export const pause = () => ({

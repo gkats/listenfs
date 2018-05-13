@@ -10,21 +10,15 @@ const MediaInfo = ({ title, artist, album }) => (
         <img width={56} height={56} src={album.cover} />
       ) : (
         <div class={css.mediaInfoCover}>
-          <Link
-            href={`#/albums/${artist.name}/${album.uri}`}
-            relative={true}
-          >
+          <Link href={`#/albums/${artist.name}/${album.uri}`} relative={true}>
             <i class="fas fa-dot-circle" />
           </Link>
         </div>
       )}
     </div>
     <div>
-      <div class={css.mediaInfoSongTitle}>
-        <Link
-          href={`#/albums/${artist.name}/${album.uri}`}
-          relative={true}
-        >
+      <div class={css.mediaInfoTrackTitle}>
+        <Link href={`#/albums/${artist.name}/${album.uri}`} relative={true}>
           {title}
         </Link>
       </div>

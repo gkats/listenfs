@@ -32,32 +32,32 @@
   opacity: 0.7;
 }
 
-.songList {
+.trackList {
   padding: 2rem;
   display: grid;
   margin-bottom: 5em;
 }
 
-.songListItem {
+.trackListItem {
   display: flex;
   align-content: center;
   padding: 1em;
   cursor: pointer;
 }
 
-.songListItem:hover {
+.trackListItem:hover {
   background-color: #ddd;
 }
 
-.songListItemSelected {
+.trackListItemSelected {
   background-color: #ddd;
 }
 
-.songTitle {
+.trackTitle {
   font-weight: 600;
 }
 
-.songNumber {
+.trackNumber {
   font-feature-settings: "tnum";
   letter-spacing: 0;
   text-align: right;
@@ -65,7 +65,7 @@
   width: 2em;
 }
 
-.songIcon {
+.trackIcon {
   color: #000;
   opacity: 0.5;
   min-width: 13px;

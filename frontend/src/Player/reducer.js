@@ -1,14 +1,14 @@
 const initialState = {
   isPlaying: false,
-  currentSong: null
+  currentTrack: null
 };
 
 const player = (state = initialState, action) => {
   switch (action.type) {
     case 'PLAYER_PLAY':
       return Object.assign({}, state, {
-        currentSong: action.song,
-        isPlaying: !!action.song
+        currentTrack: action.track,
+        isPlaying: !!action.track
       });
     case 'PLAYER_PAUSE':
       return Object.assign({}, state, {

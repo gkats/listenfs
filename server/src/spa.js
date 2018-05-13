@@ -1,7 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const { songFromFile, composeSongJson } = require('./songs');
+const { trackFromFile, composeTrackJson } = require('./tracks');
 const albumFromFolder = require('./albums').albumFromFolder;
 
 const musicPath = process.env.MUSIC_PATH;
@@ -63,15 +63,15 @@ router.get('/albums/:artistName/:albumTitle', (req, res, next) => {
     const discs = files.filter(f => isDirectory(path.join(albumPath, f)));
 
     if (discs.length) {
-      songsJson = discs.reduce(
-        (songs, disc) =>
-          songs.concat(
+      tracksJson = discs.reduce(
+        (tracks, disc) =>
+          tracks.concat(
             fs
               .readdirSync(path.join(albumPath, disc))
               .filter(f => isMp3(path.join(albumPath, disc, f)))
               .map(f =>
-                composeSongJson(
-                  songFromFile(f, path.join(artistName, albumTitle, disc)),
+                composeTrackJson(
+                  trackFromFile(f, path.join(artistName, albumTitle, disc)),
                   albumInfo,
                   artistInfo
                 )
@@ -80,11 +80,11 @@ router.get('/albums/:artistName/:albumTitle', (req, res, next) => {
         []
       );
     } else {
-      songsJson = files
+      tracksJson = files
         .filter(f => isMp3(path.join(albumPath, f)))
         .map(f =>
-          composeSongJson(
-            songFromFile(f, path.join(artistName, albumTitle)),
+          composeTrackJson(
+            trackFromFile(f, path.join(artistName, albumTitle)),
             albumInfo,
             artistInfo
           )
@@ -92,7 +92,7 @@ router.get('/albums/:artistName/:albumTitle', (req, res, next) => {
     }
     res.json(
       Object.assign({}, albumFromFolder(albumTitle, artistName, musicPath), {
-        songs: songsJson
+        tracks: tracksJson
       })
     );
   });

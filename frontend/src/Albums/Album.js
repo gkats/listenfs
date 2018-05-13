@@ -6,12 +6,12 @@ import Loader from '../Loader/Loader';
 import Link from '../Link/Link';
 import css from './Albums.css';
 
-const isSongSelected = (selectedSong, song) =>
-  selectedSong && selectedSong.id === song.id;
+const isTrackSelected = (selectedTrack, track) =>
+  selectedTrack && selectedTrack.id === track.id;
 
-const getSongListItemClassName = (selectedSong, song) =>
-  `${css.songListItem} ${
-    isSongSelected(selectedSong, song) ? css.songListItemSelected : ''
+const getTrackListItemClassName = (selectedTrack, track) =>
+  `${css.trackListItem} ${
+    isTrackSelected(selectedTrack, track) ? css.trackListItemSelected : ''
   }`;
 
 class Album extends Component {
@@ -20,8 +20,8 @@ class Album extends Component {
     this.props.show({ artistName, albumName });
   }
 
-  songClicked(song) {
-    this.props.play(song);
+  trackClicked(track) {
+    this.props.play(track);
   }
 
   render() {
@@ -41,36 +41,36 @@ class Album extends Component {
             <div class={css.mediaDetails}>
               {this.props.album.year}
               &nbsp; &bull; &nbsp;
-              {this.props.songs.length} songs
+              {this.props.tracks.length} tracks
             </div>
           </div>
         </div>
         {this.props.isLoading ? (
           <Loader visible={this.props.isLoading} />
-        ) : this.props.songs.length ? (
+        ) : this.props.tracks.length ? (
           <div>
-            <div class={css.songList}>
-              {this.props.songs.map(s => (
+            <div class={css.trackList}>
+              {this.props.tracks.map(s => (
                 <div
                   key={s.id}
-                  onClick={this.songClicked.bind(this, s)}
-                  class={getSongListItemClassName(this.props.currentSong, s)}
+                  onClick={this.trackClicked.bind(this, s)}
+                  class={getTrackListItemClassName(this.props.currentTrack, s)}
                 >
-                  <div class={css.songIcon}>
-                    {isSongSelected(this.props.currentSong, s) ? (
+                  <div class={css.trackIcon}>
+                    {isTrackSelected(this.props.currentTrack, s) ? (
                       <i class="fas fa-play" />
                     ) : null}
                   </div>
-                  <div class={css.songNumber}>
+                  <div class={css.trackNumber}>
                     {s.number ? `${parseInt(s.number, 10)}.` : '-'}
                   </div>
-                  <div class={css.songTitle}>{s.title}</div>
+                  <div class={css.trackTitle}>{s.title}</div>
                 </div>
               ))}
             </div>
           </div>
         ) : (
-          <div class={css.noneFound}>No songs found.</div>
+          <div class={css.noneFound}>No tracks found.</div>
         )}
       </div>
     );
@@ -80,8 +80,8 @@ class Album extends Component {
 const mapStateToProps = ({ albums, player }) => ({
   isLoading: albums.isLoading,
   album: albums.album,
-  songs: (albums.album || {}).songs || [],
-  currentSong: player.currentSong
+  tracks: (albums.album || {}).tracks || [],
+  currentTrack: player.currentTrack
 });
 
 export default connect(mapStateToProps, { show, play })(Album);

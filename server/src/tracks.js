@@ -3,10 +3,10 @@ const crypto = require('crypto');
 
 const NUMBER_REGEX = /^(\d{2,})\.\s/;
 
-const composeSongJson = (songJson, albumJson, artistJson) =>
-  Object.assign({}, songJson, { album: albumJson, artist: artistJson });
+const composeTrackJson = (trackJson, albumJson, artistJson) =>
+  Object.assign({}, trackJson, { album: albumJson, artist: artistJson });
 
-const songFromFile = (file, parentFolder) => {
+const trackFromFile = (file, parentFolder) => {
   const numberMatches = file.match(NUMBER_REGEX);
   const uri = path.join(parentFolder, file);
 
@@ -21,11 +21,11 @@ const songFromFile = (file, parentFolder) => {
   };
 };
 
-const removeExtension = song => song.replace('.mp3', '');
+const removeExtension = track => track.replace('.mp3', '');
 
-const removeNumber = song => song.replace(NUMBER_REGEX, '');
+const removeNumber = track => track.replace(NUMBER_REGEX, '');
 
 module.exports = {
-  songFromFile,
-  composeSongJson
+  trackFromFile,
+  composeTrackJson
 };

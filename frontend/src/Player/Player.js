@@ -56,9 +56,9 @@ class Player extends Component {
 
   prevClicked(e) {
     e.preventDefault();
-    const currentIndex = this.getCurrentSongIndex();
+    const currentIndex = this.getCurrentTrackIndex();
     if (currentIndex > 0) {
-      this.props.play(this.props.songs[currentIndex - 1]);
+      this.props.play(this.props.tracks[currentIndex - 1]);
     }
   }
 
@@ -88,19 +88,19 @@ class Player extends Component {
     if (this.props.isPlaying) {
       this.props.pause();
     } else {
-      this.props.play(this.props.currentSong || this.props.songs[0]);
+      this.props.play(this.props.currentTrack || this.props.tracks[0]);
     }
   }
 
   next() {
-    const currentIndex = this.getCurrentSongIndex();
-    if (currentIndex < this.props.songs.length - 1) {
-      this.props.play(this.props.songs[currentIndex + 1]);
+    const currentIndex = this.getCurrentTrackIndex();
+    if (currentIndex < this.props.tracks.length - 1) {
+      this.props.play(this.props.tracks[currentIndex + 1]);
     }
   }
 
-  getCurrentSongIndex() {
-    return this.props.songs.indexOf(this.props.currentSong);
+  getCurrentTrackIndex() {
+    return this.props.tracks.indexOf(this.props.currentTrack);
   }
 
   render() {
@@ -110,16 +110,16 @@ class Player extends Component {
       <div class={css.playerContainer}>
         <div class={css.player}>
           <div class={css.mediaInfoContainer}>
-            {this.props.currentSong ? (
-              <MediaInfo {...this.props.currentSong} />
+            {this.props.currentTrack ? (
+              <MediaInfo {...this.props.currentTrack} />
             ) : null}
           </div>
           <div class={css.controls}>
             <div class={css.controlsButtons}>
               <button
-                class={getControlClassName(!this.props.currentSong)}
+                class={getControlClassName(!this.props.currentTrack)}
                 onClick={this.prevClicked}
-                disabled={!this.props.currentSong}
+                disabled={!this.props.currentTrack}
               >
                 <i class="fas fa-step-backward" />
               </button>
@@ -129,9 +129,9 @@ class Player extends Component {
                 />
               </button>
               <button
-                class={getControlClassName(!this.props.currentSong)}
+                class={getControlClassName(!this.props.currentTrack)}
                 onClick={this.nextClicked}
-                disabled={!this.props.currentSong}
+                disabled={!this.props.currentTrack}
               >
                 <i class="fas fa-step-forward" />
               </button>
@@ -160,8 +160,8 @@ class Player extends Component {
 
         <AudioPlayer
           src={
-            this.props.currentSong
-              ? `${this.props.spaHost}/${this.props.currentSong.uri}`
+            this.props.currentTrack
+              ? `${this.props.spaHost}/${this.props.currentTrack.uri}`
               : null
           }
           isPlaying={this.props.isPlaying}
@@ -176,8 +176,8 @@ class Player extends Component {
 }
 
 const mapStateToProps = ({ player, albums, config }) => ({
-  songs: (albums.album || {}).songs || [],
-  currentSong: player.currentSong,
+  tracks: (albums.album || {}).tracks || [],
+  currentTrack: player.currentTrack,
   isPlaying: player.isPlaying,
   spaHost: config.spaHost
 });
