@@ -6,9 +6,12 @@ import Loader from '../Loader/Loader';
 import Link from '../Link/Link';
 import css from './Albums.css';
 
+const isSongSelected = (selectedSong, song) =>
+  selectedSong && selectedSong.id === song.id;
+
 const getSongListItemClassName = (selectedSong, song) =>
   `${css.songListItem} ${
-    selectedSong && selectedSong.id === song.id ? css.songListItemSelected : ''
+    isSongSelected(selectedSong, song) ? css.songListItemSelected : ''
   }`;
 
 class Album extends Component {
@@ -54,7 +57,7 @@ class Album extends Component {
                   class={getSongListItemClassName(this.props.currentSong, s)}
                 >
                   <div class={css.songIcon}>
-                    {this.props.currentSong === s ? (
+                    {isSongSelected(this.props.currentSong, s) ? (
                       <i class="fas fa-play" />
                     ) : null}
                   </div>

@@ -17,6 +17,9 @@ const isHidden = file =>
 const isMp3 = file =>
   fs.statSync(file).isFile() && file.endsWith('.mp3') && !isHidden(file);
 
+const composeSongJson = (songJson, albumJson, artistJson) =>
+  Object.assign({}, songJson, { album: albumJson, artist: artistJson });
+
 const router = express.Router();
 
 router.use((req, res, next) => {
@@ -53,6 +56,8 @@ router.get('/artists/:name', (req, res, next) => {
 router.get('/albums/:artistName/:albumTitle', (req, res, next) => {
   const { artistName, albumTitle } = req.params;
   const albumPath = path.join(musicPath, artistName, albumTitle);
+  const albumInfo = albumFromFolder(albumTitle, artistName, musicPath);
+  const artistInfo = { name: artistName };
 
   fs.readdir(albumPath, (err, files) => {
     if (err) {
@@ -68,25 +73,25 @@ router.get('/albums/:artistName/:albumTitle', (req, res, next) => {
               .readdirSync(path.join(albumPath, disc))
               .filter(f => isMp3(path.join(albumPath, disc, f)))
               .map(f =>
-                Object.assign(
-                  {},
+                composeSongJson(
                   songFromFile(f, path.join(artistName, albumTitle, disc)),
-                  {
-                    album: albumFromFolder(albumTitle, artistName, musicPath),
-                    artistName
-                  }
+                  albumInfo,
+                  artistInfo
                 )
               )
           ),
         []
       );
     } else {
-      songsJson = files.filter(f => isMp3(path.join(albumPath, f))).map(f =>
-        Object.assign({}, songFromFile(f, path.join(artistName, albumTitle)), {
-          album: albumFromFolder(albumTitle, artistName, musicPath),
-          artistName
-        })
-      );
+      songsJson = files
+        .filter(f => isMp3(path.join(albumPath, f)))
+        .map(f =>
+          composeSongJson(
+            songFromFile(f, path.join(artistName, albumTitle)),
+            albumInfo,
+            artistInfo
+          )
+        );
     }
     res.json(
       Object.assign({}, albumFromFolder(albumTitle, artistName, musicPath), {

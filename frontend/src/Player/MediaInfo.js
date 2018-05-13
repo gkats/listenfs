@@ -3,7 +3,7 @@ import Link from '../Link/Link';
 
 import css from './Player.css';
 
-const MediaInfo = ({ title, artistName, album }) => (
+const MediaInfo = ({ title, artist, album }) => (
   <div class={css.mediaInfo}>
     <div class={css.mediaInfoCoverContainer}>
       {album.cover ? (
@@ -11,7 +11,7 @@ const MediaInfo = ({ title, artistName, album }) => (
       ) : (
         <div class={css.mediaInfoCover}>
           <Link
-            href={`#/albums/${artistName}/${album.filename}`}
+            href={`#/albums/${artist.name}/${album.filename}`}
             relative={true}
           >
             <i class="fas fa-dot-circle" />
@@ -21,13 +21,16 @@ const MediaInfo = ({ title, artistName, album }) => (
     </div>
     <div>
       <div class={css.mediaInfoSongTitle}>
-        <Link href={`#/albums/${artistName}/${album.filename}`} relative={true}>
+        <Link
+          href={`#/albums/${artist.name}/${album.filename}`}
+          relative={true}
+        >
           {title}
         </Link>
       </div>
       <div class={css.mediaInfoArtistName}>
-        <Link href={`#/artists/${artistName}`} relative={true}>
-          {artistName}
+        <Link href={`#/artists/${artist.name}`} relative={true}>
+          {artist.name}
         </Link>
       </div>
     </div>
