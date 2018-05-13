@@ -161,7 +161,7 @@ class Player extends Component {
         <AudioPlayer
           src={
             this.props.currentSong
-              ? `${this.props.spaHost}/${this.props.currentSong.location}`
+              ? `${this.props.spaHost}/${this.props.currentSong.uri}`
               : null
           }
           isPlaying={this.props.isPlaying}

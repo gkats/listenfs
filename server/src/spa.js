@@ -1,7 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const songFromFile = require('./songs').songFromFile;
+const { songFromFile, composeSongJson } = require('./songs');
 const albumFromFolder = require('./albums').albumFromFolder;
 
 const musicPath = process.env.MUSIC_PATH;
@@ -16,9 +16,6 @@ const isHidden = file =>
 
 const isMp3 = file =>
   fs.statSync(file).isFile() && file.endsWith('.mp3') && !isHidden(file);
-
-const composeSongJson = (songJson, albumJson, artistJson) =>
-  Object.assign({}, songJson, { album: albumJson, artist: artistJson });
 
 const router = express.Router();
 

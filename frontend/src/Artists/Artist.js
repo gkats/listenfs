@@ -22,7 +22,7 @@ class Artist extends Component {
               {this.props.albums.map(a => (
                 <div key={a.name} class={css.albumListItem}>
                   <Link
-                    href={`#/albums/${this.props.route.name}/${a.filename}`}
+                    href={`#/albums/${this.props.route.name}/${a.uri}`}
                     relative={true}
                     className={css.albumLink}
                   >

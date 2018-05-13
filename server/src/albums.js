@@ -27,9 +27,11 @@ const albumFromFolder = (folder, artistName, root) => {
       .digest('hex'),
     title: folder.replace(YEAR_REGEX, ''),
     year: yearMatches ? yearMatches[1] : '',
-    artistName,
+    artist: {
+      name: artistName
+    },
     cover: getAlbumCover(path.join(artistName, folder), root),
-    filename: folder
+    uri: folder
   };
 };
 
