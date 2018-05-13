@@ -35,11 +35,11 @@ class Player extends Component {
   }
 
   componentDidMount() {
-    window.document.addEventListener('keypress', this.keyPressed);
+    window.document.addEventListener('keydown', this.keyPressed);
   }
 
   componentWillUnmount() {
-    window.document.removeEventListener('keypress', this.keyPressed);
+    window.document.removeEventListener('keydown', this.keyPressed);
   }
 
   keyPressed(e) {
@@ -51,6 +51,7 @@ class Player extends Component {
 
   playClicked(e) {
     e.preventDefault();
+    e.stopPropagation();
     this.play();
   }
 
