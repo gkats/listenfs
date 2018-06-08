@@ -4,9 +4,9 @@ const crypto = require('crypto');
 
 const YEAR_REGEX = /^\((\d+)_?\d?\)\s/;
 
-const getAlbumCover = (relativeFolder, root) => {
+const getAlbumCover = (root, relativeFolder, albumTitle) => {
   let cover = null;
-  for (let filename of ['folder', 'cover']) {
+  for (let filename of ['folder', 'cover', albumTitle]) {
     for (let extension of ['png', 'jpg', 'jpeg']) {
       cover = path.join(relativeFolder, `${filename}.${extension}`);
       if (fs.existsSync(path.join(root, cover))) {
@@ -19,18 +19,19 @@ const getAlbumCover = (relativeFolder, root) => {
 
 const albumFromFolder = (folder, artistName, root) => {
   const yearMatches = folder.match(YEAR_REGEX);
+  const title = folder.replace(YEAR_REGEX, '');
 
   return {
     id: crypto
       .createHash('md5')
       .update(folder)
       .digest('hex'),
-    title: folder.replace(YEAR_REGEX, ''),
     year: yearMatches ? yearMatches[1] : '',
+    title,
     artist: {
       name: artistName
     },
-    cover: getAlbumCover(path.join(artistName, folder), root),
+    cover: getAlbumCover(root, path.join(artistName, folder), title),
     uri: folder
   };
 };
