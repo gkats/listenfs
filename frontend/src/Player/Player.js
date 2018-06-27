@@ -16,6 +16,16 @@ const formatTime = t => {
   return `${Math.floor(t / 60)}:${('0' + Math.floor(t % 60)).slice(-2)}`;
 };
 
+const trackChanged = (newTrack, oldTrack) =>
+  newTrack && (!oldTrack || newTrack.id !== oldTrack.id);
+
+const setWindowTitle = track => {
+  const windowTitle = window.document.getElementsByTagName('title')[0];
+  if (windowTitle) {
+    windowTitle.innerHTML = `${track.title} - ${track.artist.name}`;
+  }
+};
+
 class Player extends Component {
   constructor() {
     super();
@@ -36,6 +46,12 @@ class Player extends Component {
 
   componentDidMount() {
     window.document.addEventListener('keydown', this.keyPressed);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (trackChanged(nextProps.currentTrack, this.props.currentTrack)) {
+      setWindowTitle(nextProps.currentTrack);
+    }
   }
 
   componentWillUnmount() {
