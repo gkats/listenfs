@@ -31,17 +31,28 @@ class Album extends Component {
       <div class={css.wrapper}>
         <div class={css.banner}>
           <div class={css.mediaInfo}>
-            <div class={css.mediaTitle}>{this.props.album.title}</div>
-            <div>
-              <span class={css.text}>by</span>&nbsp;
-              <Link href={`#/artists/${artistName}`} relative={true}>
-                {artistName}
-              </Link>
+            <div class={css.mediaCoverContainer}>
+              {this.props.album.cover ? (
+                <img width={100} height={100} src={this.props.album.cover} />
+              ) : (
+                <div class={css.mediaCover}>
+                  <i class="fas fa-dot-circle" />
+                </div>
+              )}
             </div>
-            <div class={css.mediaDetails}>
-              {this.props.album.year}
-              &nbsp; &bull; &nbsp;
-              {this.props.tracks.length} tracks
+            <div>
+              <div class={css.mediaTitle}>{this.props.album.title}</div>
+              <div>
+                <span class={css.text}>by</span>&nbsp;
+                <Link href={`#/artists/${artistName}`} relative={true}>
+                  {artistName}
+                </Link>
+              </div>
+              <div class={css.mediaDetails}>
+                {this.props.album.year}
+                &nbsp; &bull; &nbsp;
+                {this.props.tracks.length} tracks
+              </div>
             </div>
           </div>
         </div>
