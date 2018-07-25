@@ -6,7 +6,7 @@ const albumFromFolder = require('./albums').albumFromFolder;
 
 const musicPath = process.env.MUSIC_PATH;
 
-const isDirectory = file => fs.statSync(file).isDirectory();
+const isDirectory = file => fs.statSync(file).isDirectory() && !isHidden(file);
 
 const isHidden = file =>
   file
