@@ -7,7 +7,12 @@ const COVER_EXTENSIONS = ['png', 'PNG', 'jpg', 'JPG', 'jpeg', 'JPEG'];
 
 const getAlbumCover = (root, relativeFolder, albumTitle) => {
   let cover = null;
-  for (let filename of ['folder', 'cover', albumTitle]) {
+  for (let filename of [
+    'folder',
+    'cover',
+    albumTitle,
+    `${albumTitle} (front)`
+  ]) {
     for (let extension of COVER_EXTENSIONS) {
       cover = path.join(relativeFolder, `${filename}.${extension}`);
       if (fs.existsSync(path.join(root, cover))) {
