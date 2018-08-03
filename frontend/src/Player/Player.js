@@ -75,7 +75,7 @@ class Player extends Component {
     e.preventDefault();
     const currentIndex = this.getCurrentTrackIndex();
     if (currentIndex > 0) {
-      this.props.play(this.props.tracks[currentIndex - 1]);
+      this.props.play(this.getTrackList()[currentIndex - 1]);
     }
   }
 
@@ -101,23 +101,29 @@ class Player extends Component {
     this.setState({ duration });
   }
 
+  getTrackList() {
+    return this.props.tracks.length
+      ? this.props.tracks
+      : this.props.albumTracks;
+  }
+
   play() {
     if (this.props.isPlaying) {
       this.props.pause();
     } else {
-      this.props.play(this.props.currentTrack || this.props.tracks[0]);
+      this.props.play(this.props.currentTrack || this.getTrackList()[0]);
     }
   }
 
   next() {
     const currentIndex = this.getCurrentTrackIndex();
-    if (currentIndex < this.props.tracks.length - 1) {
-      this.props.play(this.props.tracks[currentIndex + 1]);
+    if (currentIndex < this.getTrackList().length - 1) {
+      this.props.play(this.getTrackList()[currentIndex + 1]);
     }
   }
 
   getCurrentTrackIndex() {
-    return this.props.tracks.indexOf(this.props.currentTrack);
+    return this.getTrackList().indexOf(this.props.currentTrack);
   }
 
   render() {
@@ -193,7 +199,8 @@ class Player extends Component {
 }
 
 const mapStateToProps = ({ player, albums, config }) => ({
-  tracks: (albums.album || {}).tracks || [],
+  tracks: player.tracks || [],
+  albumTracks: (albums.album || {}).tracks || [],
   currentTrack: player.currentTrack,
   isPlaying: player.isPlaying,
   spaHost: config.spaHost

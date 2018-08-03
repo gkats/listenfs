@@ -6,3 +6,8 @@ export const play = track => ({
 export const pause = () => ({
   type: 'PLAYER_PAUSE'
 });
+
+export const loadTracks = tracks => ({
+  type: 'PLAYER_LOAD_TRACKS',
+  tracks
+});

@@ -1,6 +1,7 @@
 const initialState = {
   isPlaying: false,
-  currentTrack: null
+  currentTrack: null,
+  tracks: []
 };
 
 const player = (state = initialState, action) => {
@@ -13,6 +14,10 @@ const player = (state = initialState, action) => {
     case 'PLAYER_PAUSE':
       return Object.assign({}, state, {
         isPlaying: false
+      });
+    case 'PLAYER_LOAD_TRACKS':
+      return Object.assign({}, state, {
+        tracks: action.tracks
       });
     default:
       return state;

@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
 import { show } from './actions';
-import { play } from '../Player/actions';
+import { play, loadTracks } from '../Player/actions';
 import Loader from '../Loader/Loader';
 import Link from '../Link/Link';
 import css from './Albums.css';
@@ -21,6 +21,7 @@ class Album extends Component {
   }
 
   trackClicked(track) {
+    this.props.loadTracks(this.props.tracks);
     this.props.play(track);
   }
 
@@ -95,4 +96,4 @@ const mapStateToProps = ({ albums, player }) => ({
   currentTrack: player.currentTrack
 });
 
-export default connect(mapStateToProps, { show, play })(Album);
+export default connect(mapStateToProps, { show, play, loadTracks })(Album);
