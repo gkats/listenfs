@@ -10,11 +10,11 @@ const indexError = ({ message }) => ({
   message
 });
 
-export const index = () => {
+export const index = query => {
   return dispatch => {
     dispatch({ type: 'ARTISTS_INDEX' });
 
-    apiIndex()
+    apiIndex(query)
       .then(resp =>
         resp.json().then(data => {
           dispatch(resp.ok ? indexOk(data) : indexError(data));

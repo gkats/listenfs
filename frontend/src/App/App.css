@@ -25,6 +25,11 @@
   background-color: #333;
 }
 
+.menuGroupActions {
+  display: flex;
+  justify-content: space-between;
+}
+
 .playerContainer {
   width: 100%;
   position: fixed;

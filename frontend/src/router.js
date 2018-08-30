@@ -1,4 +1,4 @@
-import Artists from './Artists/Artists';
+import Home from './Home/Home';
 import Artist from './Artists/Artist';
 import Album from './Albums/Album';
 import TrackQueue from './TrackQueue/TrackQueue';
@@ -21,7 +21,7 @@ export default function router(hash) {
 
   if (path === '/' || path === '' || path === 'artists') {
     return {
-      Component: Artists,
+      Component: Home,
       props
     };
   } else if (path === 'queue') {

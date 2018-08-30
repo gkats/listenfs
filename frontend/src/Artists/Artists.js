@@ -1,15 +1,9 @@
 import { h, Component } from 'preact';
-import { connect } from 'preact-redux';
-import { index } from './actions';
 import Link from '../Link/Link';
 import Loader from '../Loader/Loader';
 import css from './Artists.css';
 
 class Artists extends Component {
-  componentDidMount() {
-    this.props.index();
-  }
-
   render() {
     return (
       <div class={css.wrapper}>
@@ -37,12 +31,9 @@ class Artists extends Component {
   }
 }
 
-const mapStateToProps = ({ artists }) => ({
-  isLoading: artists.isLoading,
-  artists: artists.artists
-});
+Artists.defaultProps = {
+  isLoading: false,
+  artists: []
+};
 
-export default connect(
-  mapStateToProps,
-  { index }
-)(Artists);
+export default Artists;

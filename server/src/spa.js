@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
+const { filter } = require('fuzzaldrin');
 const { trackFromFile, composeTrackJson } = require('./tracks');
 const albumFromFolder = require('./albums').albumFromFolder;
 
@@ -32,7 +33,8 @@ router.get('/artists', (req, res, next) => {
     if (err) {
       return next(err);
     }
-    res.json(files.filter(f => isDirectory(path.join(musicPath, f))));
+    const artistNames = files.filter(f => isDirectory(path.join(musicPath, f)));
+    res.json(filter(artistNames, req.query.q));
   });
 });
 
