@@ -50,4 +50,7 @@ const mapStateToProps = ({ artists }) => ({
   albums: artists.albums
 });
 
-export default connect(mapStateToProps, { show })(Artist);
+export default connect(
+  mapStateToProps,
+  { show }
+)(Artist);

@@ -42,4 +42,7 @@ const mapStateToProps = ({ artists }) => ({
   artists: artists.artists
 });
 
-export default connect(mapStateToProps, { index })(Artists);
+export default connect(
+  mapStateToProps,
+  { index }
+)(Artists);

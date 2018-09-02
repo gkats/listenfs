@@ -127,7 +127,8 @@ class Player extends Component {
   }
 
   render() {
-    const progressBarWidth = this.state.currentTime * 100 / this.state.duration;
+    const progressBarWidth =
+      (this.state.currentTime * 100) / this.state.duration;
 
     return (
       <div class={css.playerContainer}>
@@ -206,4 +207,7 @@ const mapStateToProps = ({ player, albums, config }) => ({
   spaHost: config.spaHost
 });
 
-export default connect(mapStateToProps, { play, pause })(Player);
+export default connect(
+  mapStateToProps,
+  { play, pause }
+)(Player);

@@ -44,7 +44,8 @@ class Album extends Component {
             <div>
               <div class={css.mediaTitle}>{this.props.album.title}</div>
               <div>
-                <span class={css.text}>by</span>&nbsp;
+                <span class={css.text}>by</span>
+                &nbsp;
                 <Link href={`#/artists/${artistName}`} relative={true}>
                   {artistName}
                 </Link>
@@ -96,4 +97,7 @@ const mapStateToProps = ({ albums, player }) => ({
   currentTrack: player.currentTrack
 });
 
-export default connect(mapStateToProps, { show, play, loadTracks })(Album);
+export default connect(
+  mapStateToProps,
+  { show, play, loadTracks }
+)(Album);
