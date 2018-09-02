@@ -4,15 +4,8 @@ import { show } from './actions';
 import { play, loadTracks } from '../Player/actions';
 import Loader from '../Loader/Loader';
 import Link from '../Link/Link';
+import TrackItem from './TrackItem';
 import css from './Albums.css';
-
-const isTrackSelected = (selectedTrack, track) =>
-  selectedTrack && selectedTrack.id === track.id;
-
-const getTrackListItemClassName = (selectedTrack, track) =>
-  `${css.trackListItem} ${
-    isTrackSelected(selectedTrack, track) ? css.trackListItemSelected : ''
-  }`;
 
 class Album extends Component {
   componentDidMount() {
@@ -63,22 +56,11 @@ class Album extends Component {
         ) : this.props.tracks.length ? (
           <div>
             <div class={css.trackList}>
-              {this.props.tracks.map(s => (
-                <div
-                  key={s.id}
-                  onClick={this.trackClicked.bind(this, s)}
-                  class={getTrackListItemClassName(this.props.currentTrack, s)}
-                >
-                  <div class={css.trackIcon}>
-                    {isTrackSelected(this.props.currentTrack, s) ? (
-                      <i class="fas fa-play" />
-                    ) : null}
-                  </div>
-                  <div class={css.trackNumber}>
-                    {s.number ? `${parseInt(s.number, 10)}.` : '-'}
-                  </div>
-                  <div class={css.trackTitle}>{s.title}</div>
-                </div>
+              {this.props.tracks.map(t => (
+                <TrackItem
+                  track={t}
+                  onClick={this.trackClicked.bind(this, t)}
+                />
               ))}
             </div>
           </div>
@@ -93,8 +75,7 @@ class Album extends Component {
 const mapStateToProps = ({ albums, player }) => ({
   isLoading: albums.isLoading,
   album: albums.album,
-  tracks: (albums.album || {}).tracks || [],
-  currentTrack: player.currentTrack
+  tracks: (albums.album || {}).tracks || []
 });
 
 export default connect(
