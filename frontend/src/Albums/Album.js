@@ -1,10 +1,11 @@
 import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
 import { show } from './actions';
+import { addTrack as addTrackToQueue } from '../TrackQueue/actions';
 import { play, loadTracks } from '../Player/actions';
 import Loader from '../Loader/Loader';
 import Link from '../Link/Link';
-import TrackItem from './TrackItem';
+import TrackItem from '../TrackItem/TrackItem';
 import css from './Albums.css';
 
 class Album extends Component {
@@ -16,6 +17,22 @@ class Album extends Component {
   trackClicked(track) {
     this.props.loadTracks(this.props.tracks);
     this.props.play(track);
+  }
+
+  addToQueueClicked(track, e) {
+    e.stopPropagation();
+    this.props.addTrackToQueue(track);
+  }
+
+  renderAddToQueueButton(track) {
+    return (
+      <div
+        onClick={this.addToQueueClicked.bind(this, track)}
+        title="Add to queue"
+      >
+        <i class="fas fa-plus" />
+      </div>
+    );
   }
 
   render() {
@@ -60,6 +77,7 @@ class Album extends Component {
                 <TrackItem
                   track={t}
                   onClick={this.trackClicked.bind(this, t)}
+                  trackActions={[this.renderAddToQueueButton(t)]}
                 />
               ))}
             </div>
@@ -80,5 +98,5 @@ const mapStateToProps = ({ albums, player }) => ({
 
 export default connect(
   mapStateToProps,
-  { show, play, loadTracks }
+  { show, addTrackToQueue, play, loadTracks }
 )(Album);

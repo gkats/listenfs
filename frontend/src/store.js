@@ -5,6 +5,7 @@ import thunk from 'redux-thunk';
 import artists from './Artists/reducer';
 import albums from './Albums/reducer';
 import player from './Player/reducer';
+import trackQueue from './TrackQueue/reducer';
 
 export const configureStore = (persistedState = {}) =>
   createStore(
@@ -12,6 +13,7 @@ export const configureStore = (persistedState = {}) =>
       artists,
       albums,
       player,
+      trackQueue,
       config: (state = {}, action) => state
     }),
     persistedState,

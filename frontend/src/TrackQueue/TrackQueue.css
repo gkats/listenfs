@@ -1,0 +1,30 @@
+.wrapper {
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.header {
+  border-bottom: 1px solid #bbb;
+  padding-bottom: 20px;
+}
+
+.title {
+  display: block;
+  font-size: 28px;
+  line-height: 36px;
+  letter-spacing: -.005em;
+  font-weight: 600;
+  color: #333;
+  text-transform: none;
+}
+
+.trackList {
+  padding: 2rem;
+  display: grid;
+  margin-bottom: 5em;
+}
+
+.noneFound {
+  font-size: 18px;
+  padding: 2em;
+}

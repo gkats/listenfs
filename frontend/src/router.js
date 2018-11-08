@@ -1,6 +1,7 @@
 import Artists from './Artists/Artists';
 import Artist from './Artists/Artist';
 import Album from './Albums/Album';
+import TrackQueue from './TrackQueue/TrackQueue';
 import NotFound from './NotFound/NotFound';
 
 const props = {};
@@ -21,6 +22,11 @@ export default function router(hash) {
   if (path === '/' || path === '' || path === 'artists') {
     return {
       Component: Artists,
+      props
+    };
+  } else if (path === 'queue') {
+    return {
+      Component: TrackQueue,
       props
     };
   } else if (path.match(/artists\/(.+)$/)) {

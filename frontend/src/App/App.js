@@ -14,6 +14,9 @@ const App = ({ path }) => {
           <Link href={'#'} relative={true}>
             <i class="fas fa-home" />
           </Link>
+          <Link href="#/queue" relative={true}>
+            <i class="fas fa-list" />
+          </Link>
         </div>
         <Component {...props} />
         <div class={css.playerContainer}>

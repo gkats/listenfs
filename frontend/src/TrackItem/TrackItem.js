@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
-import css from './Albums.css';
+import css from './TrackItem.css';
 
 const isTrackSelected = (selectedTrack, track) =>
   selectedTrack && selectedTrack.id === track.id;
@@ -11,9 +11,15 @@ const getTrackListItemClassName = (selectedTrack, track) =>
   }`;
 
 class TrackItem extends Component {
-  render() {
-    const { track, currentTrack, onClick } = this.props;
+  renderTrackNumber(track) {
+    if (this.props.trackIndex) {
+      return `${this.props.trackIndex}.`;
+    }
+    return track.number ? `${parseInt(track.number, 10)}.` : '-';
+  }
 
+  render() {
+    const { track, currentTrack, onClick, trackActions } = this.props;
     return (
       <div
         key={track.id}
@@ -25,10 +31,9 @@ class TrackItem extends Component {
             <i class="fas fa-play" />
           ) : null}
         </div>
-        <div class={css.trackNumber}>
-          {track.number ? `${parseInt(track.number, 10)}.` : '-'}
-        </div>
+        <div class={css.trackNumber}>{this.renderTrackNumber(track)}</div>
         <div class={css.trackTitle}>{track.title}</div>
+        <div class={css.trackActions}>{trackActions}</div>
       </div>
     );
   }
@@ -36,7 +41,8 @@ class TrackItem extends Component {
 
 TrackItem.defaultProps = {
   track: {},
-  currentTrack: null
+  currentTrack: null,
+  trackActions: []
 };
 
 const mapStateToProps = ({ player }) => ({
