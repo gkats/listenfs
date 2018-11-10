@@ -1,7 +1,10 @@
 import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
 import { show } from './actions';
-import { addTrack as addTrackToQueue } from '../TrackQueue/actions';
+import {
+  addTrack as addTrackToQueue,
+  addAlbum as addAlbumToQueue
+} from '../TrackQueue/actions';
 import { play, loadTracks } from '../Player/actions';
 import Loader from '../Loader/Loader';
 import Link from '../Link/Link';
@@ -9,6 +12,11 @@ import TrackItem from '../TrackItem/TrackItem';
 import css from './Albums.css';
 
 class Album extends Component {
+  constructor() {
+    super();
+    this.addAlbumToQueueClicked = this.addAlbumToQueueClicked.bind(this);
+  }
+
   componentDidMount() {
     const { artistName, albumName } = this.props.route;
     this.props.show({ artistName, albumName });
@@ -19,15 +27,20 @@ class Album extends Component {
     this.props.play(track);
   }
 
-  addToQueueClicked(track, e) {
+  addTrackToQueueClicked(track, e) {
     e.stopPropagation();
     this.props.addTrackToQueue(track);
+  }
+
+  addAlbumToQueueClicked(e) {
+    e.preventDefault();
+    this.props.addAlbumToQueue(this.props.tracks);
   }
 
   renderAddToQueueButton(track) {
     return (
       <div
-        onClick={this.addToQueueClicked.bind(this, track)}
+        onClick={this.addTrackToQueueClicked.bind(this, track)}
         title="Add to queue"
       >
         <i class="fas fa-plus" />
@@ -67,6 +80,15 @@ class Album extends Component {
               </div>
             </div>
           </div>
+          <div class={css.albumActionsContainer}>
+            <div class={css.albumActions}>
+              <div class={css.addAlbum} onClick={this.addAlbumToQueueClicked}>
+                <i class="fas fa-plus" />
+                &nbsp;
+                <a href="#">Add album to queue</a>
+              </div>
+            </div>
+          </div>
         </div>
         {this.props.isLoading ? (
           <Loader visible={this.props.isLoading} />
@@ -98,5 +120,5 @@ const mapStateToProps = ({ albums, player }) => ({
 
 export default connect(
   mapStateToProps,
-  { show, addTrackToQueue, play, loadTracks }
+  { show, addTrackToQueue, addAlbumToQueue, play, loadTracks }
 )(Album);

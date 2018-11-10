@@ -12,9 +12,20 @@ const trackQueue = (state = initialState, action) => {
         }
       });
     case 'TRACK_QUEUE_REMOVE_TRACK':
-      const { [action.track.id]: omit, ...tracks } = state.tracks;
+      let { [action.track.id]: omit, ...tracks } = state.tracks;
       return Object.assign({}, state, {
         tracks
+      });
+    case 'TRACK_QUEUE_ADD_ALBUM':
+      return Object.assign({}, state, {
+        tracks: Object.assign(
+          {},
+          state.tracks,
+          action.tracks.reduce((tracks, track) => {
+            tracks[track.id] = track;
+            return tracks;
+          }, {})
+        )
       });
     default:
       return state;

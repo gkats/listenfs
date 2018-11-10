@@ -63,3 +63,16 @@
   font-size: 18px;
   padding: 2em;
 }
+
+.albumActionsContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.albumActions {
+  align-self: flex-end;
+}
+
+.addAlbum {
+  cursor: pointer;
+}
