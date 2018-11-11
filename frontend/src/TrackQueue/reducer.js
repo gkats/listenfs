@@ -27,6 +27,8 @@ const trackQueue = (state = initialState, action) => {
           }, {})
         )
       });
+    case 'TRACK_QUEUE_CLEAR':
+      return Object.assign({}, state, { tracks: {} });
     default:
       return state;
   }

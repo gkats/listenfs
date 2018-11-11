@@ -1,11 +1,21 @@
 import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
 import { play, loadTracks } from '../Player/actions';
-import { removeTrack } from './actions';
+import { removeTrack, clear } from './actions';
 import TrackItem from '../TrackItem/TrackItem';
 import css from './TrackQueue.css';
 
 class TrackQueue extends Component {
+  constructor() {
+    super();
+    this.clearClicked = this.clearClicked.bind(this);
+  }
+
+  clearClicked(e) {
+    e.preventDefault();
+    this.props.clear();
+  }
+
   trackClicked(track) {
     this.props.loadTracks(this.props.tracks);
     this.props.play(track);
@@ -32,6 +42,13 @@ class TrackQueue extends Component {
       <div class={css.wrapper}>
         <div class={css.header}>
           <div class={css.title}>Playlist</div>
+          <div class={css.headerActions}>
+            <div onClick={this.clearClicked}>
+              <i class="fas fa-times" />
+              &nbsp;
+              <a href="#">Clear queue</a>
+            </div>
+          </div>
         </div>
         {this.props.tracks.length ? (
           <div>
@@ -62,5 +79,5 @@ const mapStateToProps = ({ trackQueue }) => ({
 
 export default connect(
   mapStateToProps,
-  { play, loadTracks, removeTrack }
+  { play, loadTracks, removeTrack, clear }
 )(TrackQueue);

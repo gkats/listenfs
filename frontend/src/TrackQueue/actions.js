@@ -12,3 +12,7 @@ export const addAlbum = tracks => ({
   type: 'TRACK_QUEUE_ADD_ALBUM',
   tracks
 });
+
+export const clear = () => ({
+  type: 'TRACK_QUEUE_CLEAR'
+});

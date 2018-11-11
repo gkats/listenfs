@@ -28,3 +28,12 @@
   font-size: 18px;
   padding: 2em;
 }
+
+.headerActions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.action {
+  cursor: pointer;
+}
