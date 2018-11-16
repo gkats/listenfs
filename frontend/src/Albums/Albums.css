@@ -73,6 +73,10 @@
   align-self: flex-end;
 }
 
-.addAlbum {
-  cursor: pointer;
+.addAlbum:active {
+  opacity: 0.2;
+}
+
+.addTrack:active {
+  opacity: 0.2;
 }

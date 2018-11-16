@@ -28,6 +28,7 @@ class Album extends Component {
   }
 
   addTrackToQueueClicked(track, e) {
+    e.preventDefault();
     e.stopPropagation();
     this.props.addTrackToQueue(track);
   }
@@ -39,11 +40,15 @@ class Album extends Component {
 
   renderAddToQueueButton(track) {
     return (
-      <div
-        onClick={this.addTrackToQueueClicked.bind(this, track)}
-        title="Add to queue"
-      >
-        <i class="fas fa-plus" />
+      <div>
+        <a
+          href="#"
+          onClick={this.addTrackToQueueClicked.bind(this, track)}
+          title="Add to queue"
+          class={css.addTrack}
+        >
+          <i class="fas fa-plus" />
+        </a>
       </div>
     );
   }
@@ -82,10 +87,15 @@ class Album extends Component {
           </div>
           <div class={css.albumActionsContainer}>
             <div class={css.albumActions}>
-              <div class={css.addAlbum} onClick={this.addAlbumToQueueClicked}>
-                <i class="fas fa-plus" />
-                &nbsp;
-                <a href="#">Add album to queue</a>
+              <div>
+                <a
+                  href="#"
+                  class={css.addAlbum}
+                  onClick={this.addAlbumToQueueClicked}
+                >
+                  <i class="fas fa-plus" />
+                  &nbsp;Add album to queue
+                </a>
               </div>
             </div>
           </div>

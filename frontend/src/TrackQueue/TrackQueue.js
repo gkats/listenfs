@@ -22,17 +22,22 @@ class TrackQueue extends Component {
   }
 
   removeClicked(track, e) {
+    e.preventDefault();
     e.stopPropagation();
     this.props.removeTrack(track);
   }
 
   renderRemoveButton(track) {
     return (
-      <div
-        onClick={this.removeClicked.bind(this, track)}
-        title="Remove from queue"
-      >
-        <i class="fa fa-times" />
+      <div>
+        <a
+          href="#"
+          onClick={this.removeClicked.bind(this, track)}
+          title="Remove from queue"
+          class={css.removeTrack}
+        >
+          <i class="fa fa-times" />
+        </a>
       </div>
     );
   }
@@ -43,10 +48,11 @@ class TrackQueue extends Component {
         <div class={css.header}>
           <div class={css.title}>Playlist</div>
           <div class={css.headerActions}>
-            <div onClick={this.clearClicked}>
-              <i class="fas fa-times" />
-              &nbsp;
-              <a href="#">Clear queue</a>
+            <div>
+              <a href="#" onClick={this.clearClicked} class={css.clearQueue}>
+                <i class="fas fa-times" />
+                &nbsp;Clear queue
+              </a>
             </div>
           </div>
         </div>

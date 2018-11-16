@@ -37,3 +37,11 @@
 .action {
   cursor: pointer;
 }
+
+.removeTrack:active {
+  opacity: 0.2;
+}
+
+.clearQueue:active {
+  opacity: 0.2;
+}
