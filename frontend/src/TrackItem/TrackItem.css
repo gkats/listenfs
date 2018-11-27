@@ -1,8 +1,8 @@
 .trackListItem {
-  display: flex;
-  align-content: center;
+  display: grid;
   padding: 1em;
   cursor: pointer;
+  grid-template-columns: 2em 2em repeat(auto-fit, minmax(100px, 1fr));
 }
 
 .trackListItem:hover {
@@ -22,18 +22,16 @@
   letter-spacing: 0;
   text-align: right;
   padding-right: 1rem;
-  width: 2em;
 }
 
 .trackIcon {
   color: #000;
   opacity: 0.5;
-  min-width: 13px;
+  padding-right: 1rem;
 }
 
 .trackActions {
   justify-self: flex-end;
-  margin-left: auto;
   display: flex;
 }
 

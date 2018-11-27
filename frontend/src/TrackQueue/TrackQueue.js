@@ -64,6 +64,7 @@ class TrackQueue extends Component {
                   track={t}
                   onClick={this.trackClicked.bind(this, t)}
                   trackIndex={index + 1}
+                  shouldShowFullInfo={true}
                   trackActions={[this.renderRemoveButton(t)]}
                 />
               ))}

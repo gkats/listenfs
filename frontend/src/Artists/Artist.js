@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
+import { albumPath } from '../router';
 import { show } from './actions';
 import Link from '../Link/Link';
 import Loader from '../Loader/Loader';
@@ -22,7 +23,7 @@ class Artist extends Component {
               {this.props.albums.map(a => (
                 <div key={a.name} class={css.albumListItem}>
                   <Link
-                    href={`#/albums/${this.props.route.name}/${a.uri}`}
+                    href={albumPath(this.props.route.name, a.uri)}
                     relative={true}
                     className={css.albumLink}
                   >

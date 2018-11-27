@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import { artistPath } from '../router';
 import Link from '../Link/Link';
 import Loader from '../Loader/Loader';
 import css from './Artists.css';
@@ -14,7 +15,7 @@ class Artists extends Component {
             {this.props.artists.map(a => (
               <div key={a} class={css.artistListItem}>
                 <Link
-                  href={`#/artists/${a}`}
+                  href={artistPath(a)}
                   relative={true}
                   className={css.artistsLink}
                 >

@@ -56,3 +56,8 @@ export default function router(hash) {
     };
   }
 }
+
+export const artistPath = name => `#/artists/${name}`;
+
+export const albumPath = (artistName, albumUri) =>
+  `#/albums/${artistName}/${albumUri}`;

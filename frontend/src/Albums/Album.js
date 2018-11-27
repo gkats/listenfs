@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
+import { artistPath } from '../router';
 import { show } from './actions';
 import {
   addTrack as addTrackToQueue,
@@ -74,7 +75,7 @@ class Album extends Component {
               <div>
                 <span class={css.text}>by</span>
                 &nbsp;
-                <Link href={`#/artists/${artistName}`} relative={true}>
+                <Link href={artistPath(artistName)} relative={true}>
                   {artistName}
                 </Link>
               </div>
