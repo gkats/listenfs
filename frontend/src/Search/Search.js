@@ -19,12 +19,17 @@ class Search extends Component {
   }
 
   render() {
+    if (this.searchEl && this.props.isFocused) {
+      this.searchEl.focus();
+    }
+
     return (
       <div>
         <div class={css.container}>
           <div class={css.searchBox}>
             <input
               type="text"
+              ref={el => (this.searchEl = el)}
               class={css.searchInput}
               placeholder="Search Artists"
               onInput={this.inputChanged}
@@ -39,7 +44,8 @@ class Search extends Component {
 }
 
 Search.defaultProps = {
-  action: () => {}
+  action: () => {},
+  isFocused: false
 };
 
 export default Search;
